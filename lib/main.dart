@@ -1,10 +1,22 @@
+import 'dart:io';
+
 import 'package:desktop_app_demo/route/RouteName.dart';
-import 'package:desktop_app_demo/router_genrator/Router_Generator.dart';
-import 'package:desktop_app_demo/screen/Luncher_Page.dart';
+import 'package:desktop_app_demo/router_genrator/RouterGenerator.dart';
+import 'package:desktop_app_demo/screen/LuncherPage.dart';
 import 'package:desktop_app_demo/screen/login/login_screen.dart';
 import 'package:flutter/material.dart';
 
+class MyHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
+  }
+}
+
 void main() {
+  HttpOverrides.global = MyHttpOverrides();
   runApp(const MyApp());
 }
 
@@ -14,11 +26,10 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      builder: (context, child) => HomePage(child: child!),
       onGenerateRoute: RouteGenerator.generateRoute,
-      initialRoute: RoutesName.LOGIN_PAGE,
+      initialRoute: RoutesName.INITIAL_PAGE,
     );
   }
 }

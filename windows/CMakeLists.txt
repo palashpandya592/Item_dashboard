@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.14)
-project(desktop_app_demo LANGUAGES CXX)
+project(Item_dashboard LANGUAGES CXX)
 
-set(BINARY_NAME "desktop_app_demo")
+set(BINARY_NAME "Item_dashboard")
 
 cmake_policy(SET CMP0063 NEW)
 

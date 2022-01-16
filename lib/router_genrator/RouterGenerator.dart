@@ -1,6 +1,8 @@
 import 'package:desktop_app_demo/route/RouteName.dart';
 import 'package:desktop_app_demo/router_genrator/GenerateRoutePage.dart';
+import 'package:desktop_app_demo/screen/LuncherPage.dart';
 import 'package:desktop_app_demo/screen/login/login_screen.dart';
+import 'package:desktop_app_demo/screen/product/ProductListScreen.dart';
 import 'package:desktop_app_demo/screen/register/RegisterScreen.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -13,9 +15,12 @@ class RouteGenerator {
       case RoutesName.REGISTER_PAGE:
         return GeneratePageRoute(
             widget: const RegisterScreen(), routeName: settings.name!);
+      case RoutesName.PRODUCT_LIST_PAGR:
+        return GeneratePageRoute(
+            widget: const ProductListScreen(), routeName: settings.name!);
       default:
         return GeneratePageRoute(
-            widget: const LoginScreen(), routeName: settings.name!);
+            widget: const LaunchScreen(), routeName: settings.name!);
     }
   }
 }
