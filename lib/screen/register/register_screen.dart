@@ -1,10 +1,8 @@
-import 'dart:io';
 
 import 'package:desktop_app_demo/utilites/material_button.dart';
 import 'package:desktop_app_demo/utilites/style_extension.dart';
 import 'package:desktop_app_demo/utilites/text_field_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
@@ -19,15 +17,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
   TextEditingController password = TextEditingController();
   TextEditingController confirmPassword = TextEditingController();
 
-  File? image;
-
-  Future pickImage() async {
-    final image = await ImagePicker().pickImage(source: ImageSource.gallery);
-    if (image == null) {
-      final imageTemporary = File(image!.path);
-      this.image = imageTemporary;
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,18 +26,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         child: Center(
           child: Column(
             children: [
-              image != null
-                  ? ClipOval(
-                      child: Image.file(
-                        image!,
-                        width: 300,
-                        height: 100,
-                        fit: BoxFit.cover,
-                      ),
-                    )
-                  : const FlutterLogo(
-                      size: 260,
-                    ),
+
               TextFieldWidget(
                   controller: name,
                   cursorColors: Colors.black,
