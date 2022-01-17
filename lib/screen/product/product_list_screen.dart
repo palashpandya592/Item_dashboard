@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:desktop_app_demo/Util/shared_prefence_util.dart';
 import 'package:desktop_app_demo/route/route_name.dart';
 import 'package:desktop_app_demo/utilites/product_list_widget.dart';
@@ -72,12 +73,12 @@ class _ProductListScreenState extends State<ProductListScreen> {
                               Expanded(
                                 child: AspectRatio(
                                   aspectRatio: 0.5,
-                                  child: FadeInImage(
-                                    image: NetworkImage(
-                                        '${state.itemList![index].image}'),
-                                    placeholder: const AssetImage(
-                                        'assets/image/donut.png'),
-                                    fit: BoxFit.cover,
+                                  child: CachedNetworkImage(
+                                    imageUrl: '${state.itemList![index].image}',
+                                    placeholder: (context, url) =>
+                                        const CircularProgressIndicator(),
+                                    errorWidget: (context, url, error) =>
+                                        const Icon(Icons.error),
                                   ),
                                 ),
                               ),
@@ -134,3 +135,10 @@ class _ProductListScreenState extends State<ProductListScreen> {
     );
   }
 }
+// FadeInImage(
+// image: NetworkImage(
+// '${state.itemList![index].image}'),
+// placeholder: const AssetImage(
+// 'assets/image/donut.png'),
+// fit: BoxFit.cover,
+// ),

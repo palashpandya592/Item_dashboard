@@ -14,15 +14,12 @@ class LoginAPI {
           ? int.tryParse(loginRequest.password!)
           : 0
     };
-    print("Email : ${loginRequest.email}, Password: ${loginRequest.password}");
     FormData formData = FormData.fromMap(request);
     final response = await dio.post(
         'https://139.59.79.228/flutter-api/public/api/login',
         data: formData);
     if (response.statusCode == 200) {
       return UserResponse.fromJson(response.data);
-      /*sharedPreferenceUtil.setString(
-          SharedPreferenceUtil.TOKEN, userResponse.token);*/
     } else {
       print('Request failed with status: ${response.statusCode}.');
     }

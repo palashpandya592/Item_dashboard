@@ -15,7 +15,6 @@ class LaunchScreen extends StatefulWidget {
 class _LaunchScreenState extends State<LaunchScreen> {
   @override
   void initState() {
-    print("inside _LaunchScreen");
     Timer(const Duration(seconds: 1), onClose);
     super.initState();
   }
@@ -30,7 +29,6 @@ class _LaunchScreenState extends State<LaunchScreen> {
     String? token =
         await sharedPreferenceUtil.getString(SharedPreferenceUtil.TOKEN);
     Navigator.pop(context);
-    print("Token : ${token}");
     if (token != null) {
       Navigator.pushNamed(context, RoutesName.PRODUCT_LIST_PAGR);
     } else {
