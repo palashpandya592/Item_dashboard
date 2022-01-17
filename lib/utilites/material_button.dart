@@ -1,3 +1,4 @@
+import 'package:desktop_app_demo/util/colors_constant.dart';
 import 'package:flutter/material.dart';
 
 class MaterialButtonWidget extends StatefulWidget {
@@ -16,13 +17,13 @@ class _MaterialButtonWidgetState extends State<MaterialButtonWidget> {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(8),
-      height: 48,
-      width: 450,
+      height: 60,
+      width: 350,
       child: MaterialButton(
         onPressed: widget.onTap,
         child: widget.child,
         textColor: Colors.white,
-        color: Colors.blue,
+        color: ColorsConstant.APP_PRIMARY_COLOR,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
         ),

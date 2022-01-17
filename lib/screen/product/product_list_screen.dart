@@ -2,6 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:desktop_app_demo/Util/shared_prefence_util.dart';
 import 'package:desktop_app_demo/route/route_name.dart';
 import 'package:desktop_app_demo/utilites/product_list_widget.dart';
+import 'package:desktop_app_demo/utilites/style_extension.dart';
+import 'package:desktop_app_demo/utilites/text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -34,7 +36,6 @@ class _ProductListScreenState extends State<ProductListScreen> {
             return Scaffold(
               appBar: AppBar(
                 title: const Text("ProductList"),
-                backgroundColor: Colors.black,
                 actions: <Widget>[
                   Padding(
                     padding: const EdgeInsets.only(right: 20),
@@ -58,65 +59,88 @@ class _ProductListScreenState extends State<ProductListScreen> {
               ),
               body: state is ShowIProductListSuccessState
                   ? GridView.count(
-                      crossAxisCount: 3,
-                      crossAxisSpacing: 3,
+                      crossAxisCount: 4,
+                      crossAxisSpacing: 4,
                       childAspectRatio: 0.66,
                       children: List.generate(state.itemList!.length, (index) {
                         return Card(
-                          color: const Color(0xff27282C),
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(4.0),
+                            borderRadius: BorderRadius.circular(8.0),
                           ),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Expanded(
                                 child: AspectRatio(
-                                  aspectRatio: 0.5,
-                                  child: CachedNetworkImage(
+                                  aspectRatio: 0.8,
+                                  child: /*CachedNetworkImage(
                                     imageUrl: '${state.itemList![index].image}',
                                     placeholder: (context, url) =>
                                         const CircularProgressIndicator(),
                                     errorWidget: (context, url, error) =>
                                         const Icon(Icons.error),
-                                  ),
+                                  ),*/
+                                      state.itemList?[index].image != null
+                                          ? FadeInImage.assetNetwork(
+                                              placeholder:
+                                                  'assets/image/donut.png',
+                                              image:
+                                                  state.itemList![index].image!)
+                                          : Image.asset('assets/image/camera'),
                                 ),
                               ),
                               const SizedBox(
                                 height: 10.0,
                               ),
-                              Center(
-                                child: ProductListWidget(
-                                  textLabelName: 'Name',
-                                  textProduct: state.itemList![index].name,
+                              Container(
+                                padding: const EdgeInsets.only(left: 16),
+                                child: TextWidget(
+                                  text: state.itemList![index].name!,
+                                  style: textStyle(const Color(0xff262626),
+                                      FontWeight.w600, 16),
+                                  align: TextAlign.start,
                                 ),
                               ),
                               const SizedBox(
                                 height: 10.0,
                               ),
-                              Center(
-                                  child: ProductListWidget(
-                                textLabelName: 'Description',
-                                textProduct: state.itemList![index].description,
-                              )),
-                              const SizedBox(
-                                height: 10.0,
-                              ),
-                              Center(
-                                child: ProductListWidget(
-                                    textLabelName: 'MRP',
-                                    textProduct:
-                                        '${state.itemList![index].mrp}'),
+                              Container(
+                                padding: const EdgeInsets.only(left: 16),
+                                child: TextWidget(
+                                  text: state.itemList![index].description!,
+                                  style: textStyle(const Color(0xff777777),
+                                      FontWeight.w600, 14),
+                                  align: TextAlign.start,
+                                ),
                               ),
                               const SizedBox(
                                 height: 10.0,
                               ),
-                              Center(
-                                  child: ProductListWidget(
-                                textLabelName: 'Selling Price',
-                                textProduct:
-                                    '${state.itemList![index].selling}',
-                              )),
+                              Container(
+                                padding: const EdgeInsets.only(left: 16),
+                                child: TextWidget(
+                                  text:
+                                      '\u{20B9} ${state.itemList![index].mrp}',
+                                  style: textStyle(const Color(0xff777777),
+                                      FontWeight.w600, 16),
+                                  align: TextAlign.start,
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 10.0,
+                              ),
+                              Container(
+                                alignment: Alignment.centerRight,
+                                padding: const EdgeInsets.only(right: 16),
+                                child: TextWidget(
+                                  text:
+                                      '\u{20B9} ${state.itemList![index].selling}',
+                                  style: textStyle(const Color(0xff262626),
+                                      FontWeight.w600, 14),
+                                  align: TextAlign.right,
+                                ),
+                              ),
                               const SizedBox(
                                 height: 5.0,
                               ),
@@ -135,10 +159,3 @@ class _ProductListScreenState extends State<ProductListScreen> {
     );
   }
 }
-// FadeInImage(
-// image: NetworkImage(
-// '${state.itemList![index].image}'),
-// placeholder: const AssetImage(
-// 'assets/image/donut.png'),
-// fit: BoxFit.cover,
-// ),

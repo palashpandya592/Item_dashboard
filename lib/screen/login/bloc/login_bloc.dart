@@ -13,13 +13,12 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
   LoginBloc() : super(const LoginState()) {
     on<UserLoginEvent>(_loginUser);
+    on<EmailChangeEvent>(_emailValid);
+    on<PasswordChangeEvent>(_passwordValid);
   }
 
   void _loginUser(UserLoginEvent event, Emitter<LoginState> emit) async {
-    RegExp email = RegExp(r'^.+@[a-zA-Z]+\.{1}[a-zA-Z]+(\.{0,1}[a-zA-Z]+)$');
-    if (event.email != null &&
-        email.hasMatch(event.email!) &&
-        event.password!.length >= 8) {
+    if (state.validEmail == true && state.validPassword == true) {
       emit(state.copyWith(isSuccessLogin: false, isLoading: true));
       LoginAPI loginAPI = LoginAPI();
       LoginRequest loginRequest = LoginRequest();
@@ -37,8 +36,36 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       emit(state.copyWith(isSuccessLogin: false, isLoading: false));
     } else {
       emit(state.copyWith(
-          isSuccessLogin: false, isLoading: false, isFailedLogin: false));
-      print('please check email & password');
+        isSuccessLogin: false,
+        isLoading: false,
+        isFailedLogin: false,
+      ));
+    }
+  }
+
+  void _emailValid(EmailChangeEvent event, Emitter<LoginState> emit) async {
+    RegExp email = RegExp(r'^.+@[a-zA-Z]+\.{1}[a-zA-Z]+(\.{0,1}[a-zA-Z]+)$');
+    if (event.email != null && email.hasMatch(event.email!)) {
+      emit(state.copyWith(
+        validEmail: true,
+      ));
+    } else {
+      emit(state.copyWith(
+        validEmail: false,
+      ));
+    }
+  }
+
+  void _passwordValid(
+      PasswordChangeEvent event, Emitter<LoginState> emit) async {
+    if (event.password != null && event.password!.length >= 8) {
+      emit(state.copyWith(
+        validPassword: true,
+      ));
+    } else {
+      emit(state.copyWith(
+        validPassword: false,
+      ));
     }
   }
 }

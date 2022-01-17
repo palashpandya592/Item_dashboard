@@ -1,11 +1,10 @@
 import 'package:desktop_app_demo/route/route_name.dart';
+import 'package:desktop_app_demo/util/colors_constant.dart';
 import 'package:desktop_app_demo/utilites/material_button.dart';
 import 'package:desktop_app_demo/utilites/style_extension.dart';
 import 'package:desktop_app_demo/utilites/text_field_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-
 import 'bloc/login_bloc.dart';
 import 'bloc/login_event.dart';
 import 'bloc/login_state.dart';
@@ -19,7 +18,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   LoginBloc loginBloc = LoginBloc();
-  TextEditingController email = TextEditingController();
+  TextEditingController emailControl = TextEditingController();
   TextEditingController password = TextEditingController();
 
   @override
@@ -30,85 +29,140 @@ class _LoginScreenState extends State<LoginScreen> {
         listener: (context, state) async {
           if (state.isSuccessLogin == true) {
             Navigator.pushNamed(context, RoutesName.PRODUCT_LIST_PAGR);
-            _toastMessage('Success Full Login');
-          }
-          if (state.isFailedLogin == true) {
-            _toastMessage('Failed Login');
           }
         },
         child: BlocBuilder<LoginBloc, LoginState>(
           builder: (context, state) {
             return Scaffold(
-              body: Container(
-                padding: const EdgeInsets.all(16),
-                child: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      TextFieldWidget(
-                          controller: email,
-                          cursorColors: Colors.black,
-                          textStyle:
-                              textStyle(Colors.black, FontWeight.w600, 18),
-                          hintTextStyle:
-                              textStyle(Colors.black, FontWeight.w600, 16),
-                          placeholderText: 'Enter Your Email'),
-                      TextFieldWidget(
-                          controller: password,
-                          cursorColors: Colors.black,
-                          textStyle:
-                              textStyle(Colors.black, FontWeight.w600, 18),
-                          hintTextStyle:
-                              textStyle(Colors.black, FontWeight.w600, 16),
-                          placeholderText: 'Enter Your Email'),
-                      MaterialButtonWidget(
-                        onTap: () {
-                          context.read<LoginBloc>().add(UserLoginEvent(
-                              email: email.text, password: password.text));
-                        },
-                        child: state.isLoading == true
-                            ? const SizedBox(
-                                width: 26,
-                                height: 26,
-                                child: CircularProgressIndicator(
-                                  valueColor: AlwaysStoppedAnimation<Color>(
-                                      Colors.black),
-                                ),
-                              )
-                            : Text(
-                                'Login',
-                                style: textStyle(
-                                    Colors.black, FontWeight.w600, 18),
-                              ),
+              body: Row(
+                children: [
+                  Expanded(
+                    flex: 1,
+                    child: Container(
+                      decoration: const BoxDecoration(
+                        gradient: LinearGradient(
+                            colors: [
+                              Color(0xFF3366FF),
+                              Color(0xFF00CCFF),
+                            ],
+                            begin: FractionalOffset(0.0, 0.0),
+                            end: FractionalOffset(1.0, 0.0),
+                            stops: [0.0, 1.0],
+                            tileMode: TileMode.clamp),
                       ),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.pushNamed(
-                              context, RoutesName.REGISTER_PAGE);
-                        },
-                        child: Text(
-                          "Do not have an account ? Signup here.",
-                          style: textStyle(Colors.black, FontWeight.w500, 16),
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
-                ),
+                  Expanded(
+                    flex: 1,
+                    child: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          TextFieldWidget(
+                              controller: emailControl,
+                              cursorColors: Colors.black,
+                              textStyle: textStyle(
+                                  ColorsConstant.APP_PRIMARY_COLOR,
+                                  FontWeight.w600,
+                                  18),
+                              hintTextStyle: textStyle(
+                                  ColorsConstant.APP_PRIMARY_COLOR,
+                                  FontWeight.w600,
+                                  16),
+                              placeholderText: 'Enter Your Email',
+                              errorText: state.validEmail == false
+                                  ? 'please enter valid email'
+                                  : null,
+                              errorTextStyle: textStyle(
+                                  ColorsConstant.APP_PRIMARY_COLOR,
+                                  FontWeight.w400,
+                                  14),
+                              onChanged: (value) {
+                                context
+                                    .read<LoginBloc>()
+                                    .add(EmailChangeEvent(value));
+                              }),
+                          TextFieldWidget(
+                            obscureText: true,
+                            controller: password,
+                            cursorColors: Colors.black,
+                            textStyle: textStyle(
+                                ColorsConstant.APP_PRIMARY_COLOR,
+                                FontWeight.w600,
+                                18),
+                            hintTextStyle: textStyle(
+                                ColorsConstant.APP_PRIMARY_COLOR,
+                                FontWeight.w600,
+                                16),
+                            placeholderText: 'Enter Your Password',
+                            errorText: state.validPassword == false
+                                ? ' password length must be greater than 7'
+                                : null,
+
+                            errorTextStyle: textStyle(
+                                ColorsConstant.APP_PRIMARY_COLOR,
+                                FontWeight.w400,
+                                14),
+                            onChanged: (value) {
+                              context
+                                  .read<LoginBloc>()
+                                  .add(PasswordChangeEvent(value));
+                            },
+                          ),
+                          MaterialButtonWidget(
+                            onTap: () {
+                              context.read<LoginBloc>().add(UserLoginEvent(
+                                  email: emailControl.text,
+                                  password: password.text));
+                            },
+                            child: state.isLoading == true
+                                ? const SizedBox(
+                                    width: 26,
+                                    height: 26,
+                                    child: CircularProgressIndicator(
+                                      valueColor: AlwaysStoppedAnimation<Color>(
+                                          Colors.black),
+                                    ),
+                                  )
+                                : Text(
+                                    'Login',
+                                    style: textStyle(
+                                        Colors.white, FontWeight.w600, 18),
+                                  ),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Do not have an account ?",
+                                style: textStyle(
+                                    Colors.black, FontWeight.w500, 16),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                      context, RoutesName.REGISTER_PAGE);
+                                },
+                                child: Text(
+                                  " SingUp here",
+                                  style: textStyle(
+                                      ColorsConstant.APP_PRIMARY_COLOR,
+                                      FontWeight.w600,
+                                      18),
+                                ),
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
+                  )
+                ],
               ),
             );
           },
         ),
       ),
     );
-  }
-
-  _toastMessage(String message) {
-    Fluttertoast.showToast(
-        msg: message,
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
-        timeInSecForIosWeb: 2,
-        backgroundColor: Colors.black,
-        textColor: Colors.blue);
   }
 }
