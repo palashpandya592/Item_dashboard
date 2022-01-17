@@ -77,6 +77,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
                                         '${state.itemList![index].image}'),
                                     placeholder: const AssetImage(
                                         'assets/image/donut.png'),
+                                    fit: BoxFit.cover,
                                   ),
                                 ),
                               ),
