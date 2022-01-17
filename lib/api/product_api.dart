@@ -1,9 +1,9 @@
 import 'dart:convert';
 
-import 'package:desktop_app_demo/Util/SharedPrefenceUtil.dart';
-import 'package:desktop_app_demo/model/ProductResponse.dart';
-import 'package:desktop_app_demo/model/ProductDetails.dart';
-import 'package:desktop_app_demo/model/UserResponse.dart';
+import 'package:desktop_app_demo/Util/shared_prefence_util.dart';
+import 'package:desktop_app_demo/model/product_response.dart';
+import 'package:desktop_app_demo/model/product_details.dart';
+import 'package:desktop_app_demo/model/user_response.dart';
 import 'package:http/http.dart' as http;
 
 class ProductListAPI {

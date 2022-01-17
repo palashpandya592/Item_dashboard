@@ -1,13 +1,14 @@
-import 'package:desktop_app_demo/Util/SharedPrefenceUtil.dart';
-import 'package:desktop_app_demo/route/RouteName.dart';
+import 'package:desktop_app_demo/route/route_name.dart';
+import 'package:desktop_app_demo/utilites/material_button.dart';
+import 'package:desktop_app_demo/utilites/style_extension.dart';
+import 'package:desktop_app_demo/utilites/text_field_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-import 'bloc/LoginBloc.dart';
-import 'bloc/LoginEvent.dart';
-import 'bloc/LoginState.dart';
+import 'bloc/login_bloc.dart';
+import 'bloc/login_event.dart';
+import 'bloc/login_state.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -20,8 +21,6 @@ class _LoginScreenState extends State<LoginScreen> {
   LoginBloc loginBloc = LoginBloc();
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
-
-  final sharedPreferenceUtil = SharedPreferenceUtil.getInstance();
 
   @override
   Widget build(BuildContext context) {
@@ -46,111 +45,50 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      SizedBox(
-                        width: 450,
-                        child: TextField(
+                      TextFieldWidget(
                           controller: email,
-                          decoration: const InputDecoration(
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Colors.black,
-                                width: 2,
-                              ),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Colors.black,
-                                width: 2,
-                              ),
-                            ),
-                            hintText: "Enter Your Email ",
-                            hintStyle: TextStyle(
-                              color: Colors.black,
-                            ),
-                          ),
-                          style: const TextStyle(
-                            color: Colors.black,
-                          ),
-                          cursorColor: Colors.black,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 16,
-                      ),
-                      SizedBox(
-                          width: 450,
-                          child: TextField(
-                            controller: password,
-                            decoration: const InputDecoration(
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Colors.black,
-                                  width: 2,
+                          cursorColors: Colors.black,
+                          textStyle:
+                              textStyle(Colors.black, FontWeight.w600, 18),
+                          hintTextStyle:
+                              textStyle(Colors.black, FontWeight.w600, 16),
+                          placeholderText: 'Enter Your Email'),
+                      TextFieldWidget(
+                          controller: password,
+                          cursorColors: Colors.black,
+                          textStyle:
+                              textStyle(Colors.black, FontWeight.w600, 18),
+                          hintTextStyle:
+                              textStyle(Colors.black, FontWeight.w600, 16),
+                          placeholderText: 'Enter Your Email'),
+                      MaterialButtonWidget(
+                        onTap: () {
+                          context.read<LoginBloc>().add(UserLoginEvent(
+                              email: email.text, password: password.text));
+                        },
+                        child: state.isLoading == true
+                            ? const SizedBox(
+                                width: 26,
+                                height: 26,
+                                child: CircularProgressIndicator(
+                                  valueColor: AlwaysStoppedAnimation<Color>(
+                                      Colors.black),
                                 ),
+                              )
+                            : Text(
+                                'Login',
+                                style: textStyle(
+                                    Colors.black, FontWeight.w600, 18),
                               ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Colors.black,
-                                  width: 2,
-                                ),
-                              ),
-                              hintText: "Enter Password ",
-                              hintStyle: TextStyle(
-                                color: Colors.black,
-                              ),
-                            ),
-                            style: const TextStyle(
-                              color: Colors.black,
-                            ),
-                            cursorColor: Colors.black,
-                          )),
-                      const SizedBox(
-                        height: 16,
-                      ),
-                      SizedBox(
-                        width: 450,
-                        height: 48,
-                        child: MaterialButton(
-                          onPressed: () {
-                            context.read<LoginBloc>().add(UserLoginEvent(
-                                email: email.text, password: password.text));
-                          },
-                          child: state.isLoading == true
-                              ? const SizedBox(
-                                  width: 26,
-                                  height: 26,
-                                  child: CircularProgressIndicator(
-                                    valueColor: AlwaysStoppedAnimation<Color>(
-                                        Colors.black),
-                                  ),
-                                )
-                              : const Text(
-                                  'Login',
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                  ),
-                                ),
-                          textColor: Colors.white,
-                          color: Colors.blue,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 10,
                       ),
                       GestureDetector(
                         onTap: () {
                           Navigator.pushNamed(
                               context, RoutesName.REGISTER_PAGE);
                         },
-                        child: const Text(
+                        child: Text(
                           "Do not have an account ? Signup here.",
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500),
+                          style: textStyle(Colors.black, FontWeight.w500, 16),
                         ),
                       ),
                     ],

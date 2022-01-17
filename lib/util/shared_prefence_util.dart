@@ -4,7 +4,7 @@ class SharedPreferenceUtil {
   static const TOKEN = "token";
 
   static final SharedPreferenceUtil _instance =
-      new SharedPreferenceUtil._internal();
+      SharedPreferenceUtil._internal();
 
   SharedPreferenceUtil._internal();
 

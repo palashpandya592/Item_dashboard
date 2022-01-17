@@ -1,4 +1,4 @@
-import 'package:desktop_app_demo/model/ProductList.dart';
+import 'package:desktop_app_demo/model/product_list.dart';
 
 class ProductResponse {
   String? message;

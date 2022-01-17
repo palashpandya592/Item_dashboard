@@ -1,4 +1,4 @@
-import 'package:desktop_app_demo/model/ProductDetails.dart';
+import 'package:desktop_app_demo/model/product_details.dart';
 
 class ProductList {
   int? currentPage;

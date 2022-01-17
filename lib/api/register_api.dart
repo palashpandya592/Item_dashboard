@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:desktop_app_demo/model/RegisterRequest.dart';
+import 'package:desktop_app_demo/model/register_request.dart';
 import 'package:http/http.dart' as http;
 
 class RegisterAPI {

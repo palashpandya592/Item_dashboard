@@ -5,7 +5,7 @@ class Item {
   String? description;
   String? image;
 
-  Item({this.name, this.mrp, this.selling, this.description});
+  Item({this.name, this.mrp, this.selling, this.description, this.image});
 
   static List<Item>? fromJsonArray(List<dynamic>? itemJsonList) {
     List<Item>? itemList = itemJsonList?.map((e) => Item.fromJson(e)).toList();

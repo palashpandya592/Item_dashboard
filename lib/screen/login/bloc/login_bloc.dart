@@ -1,12 +1,12 @@
-import 'package:desktop_app_demo/Util/SharedPrefenceUtil.dart';
-import 'package:desktop_app_demo/api/LoginApi.dart';
-import 'package:desktop_app_demo/model/LoginRequest.dart';
+import 'package:desktop_app_demo/Util/shared_prefence_util.dart';
+import 'package:desktop_app_demo/api/login_api.dart';
+import 'package:desktop_app_demo/model/login_request.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-import 'LoginEvent.dart';
-import 'LoginState.dart';
+import 'login_event.dart';
+import 'login_state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final sharedPreferenceUtil = SharedPreferenceUtil.getInstance();

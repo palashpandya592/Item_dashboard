@@ -1,6 +1,6 @@
 
 
-import 'User.dart';
+import 'user.dart';
 
 class UserResponse {
   String? token;

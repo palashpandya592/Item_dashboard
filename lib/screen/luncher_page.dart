@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:desktop_app_demo/Util/SharedPrefenceUtil.dart';
-import 'package:desktop_app_demo/route/RouteName.dart';
+import 'package:desktop_app_demo/Util/shared_prefence_util.dart';
+import 'package:desktop_app_demo/route/route_name.dart';
 import 'package:flutter/material.dart';
 
 class LaunchScreen extends StatefulWidget {

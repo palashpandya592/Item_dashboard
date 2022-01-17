@@ -1,8 +1,8 @@
-import 'package:desktop_app_demo/api/ProductApi.dart';
-import 'package:desktop_app_demo/screen/product/bloc/ProductEvent.dart';
+import 'package:desktop_app_demo/api/product_api.dart';
+import 'package:desktop_app_demo/screen/product/bloc/product_event.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'ProductState.dart';
+import 'product_state.dart';
 
 class ProductBloc extends Bloc<ProductEvent, ProductState> {
   ProductBloc() : super(ProductInitialState()) {

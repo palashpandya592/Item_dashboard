@@ -1,6 +1,6 @@
-import 'package:desktop_app_demo/Util/SharedPrefenceUtil.dart';
-import 'package:desktop_app_demo/model/LoginRequest.dart';
-import 'package:desktop_app_demo/model/UserResponse.dart';
+import 'package:desktop_app_demo/Util/shared_prefence_util.dart';
+import 'package:desktop_app_demo/model/login_request.dart';
+import 'package:desktop_app_demo/model/user_response.dart';
 import 'package:dio/dio.dart';
 
 class LoginAPI {
