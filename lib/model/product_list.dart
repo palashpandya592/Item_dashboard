@@ -1,9 +1,9 @@
-import 'package:desktop_app_demo/model/product_details.dart';
+import 'package:desktop_app_demo/model/product.dart';
 
 class ProductList {
   int? currentPage;
 
-  List<Item>? itemList;
+  List<Product>? itemList;
 
   ProductList({
     this.currentPage,
@@ -12,5 +12,5 @@ class ProductList {
 
   ProductList.fromJson(Map<String, dynamic> json)
       : currentPage = json['current_page'],
-        itemList = Item.fromJsonArray(json['data']);
+        itemList = Product.fromJsonArray(json['data']);
 }

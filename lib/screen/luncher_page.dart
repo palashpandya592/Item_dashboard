@@ -30,7 +30,7 @@ class _LaunchScreenState extends State<LaunchScreen> {
         await sharedPreferenceUtil.getString(SharedPreferenceUtil.TOKEN);
     Navigator.pop(context);
     if (token != null) {
-      Navigator.pushNamed(context, RoutesName.PRODUCT_LIST_PAGR);
+      Navigator.pushNamed(context, RoutesName.PRODUCT_LIST_PAGE);
     } else {
       Navigator.pushNamed(context, RoutesName.LOGIN_PAGE);
     }

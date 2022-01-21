@@ -28,7 +28,7 @@ class _LoginScreenState extends State<LoginScreen> {
       child: BlocListener<LoginBloc, LoginState>(
         listener: (context, state) async {
           if (state.isSuccessLogin == true) {
-            Navigator.pushNamed(context, RoutesName.PRODUCT_LIST_PAGR);
+            Navigator.pushNamed(context, RoutesName.PRODUCT_LIST_PAGE);
           }
         },
         child: BlocBuilder<LoginBloc, LoginState>(
@@ -62,21 +62,14 @@ class _LoginScreenState extends State<LoginScreen> {
                               controller: emailControl,
                               cursorColors: Colors.black,
                               textStyle: textStyle(
-                                  ColorsConstant.APP_PRIMARY_COLOR,
-                                  FontWeight.w600,
-                                  18),
-                              hintTextStyle: textStyle(
-                                  ColorsConstant.APP_PRIMARY_COLOR,
-                                  FontWeight.w600,
-                                  16),
+                                  Colors.black54, FontWeight.w600, 18),
+                              hintTextStyle:
+                                  textStyle(Colors.grey, FontWeight.w600, 16),
                               placeholderText: 'Enter Your Email',
                               errorText: state.validEmail == false
                                   ? 'please enter valid email'
                                   : null,
-                              errorTextStyle: textStyle(
-                                  ColorsConstant.APP_PRIMARY_COLOR,
-                                  FontWeight.w400,
-                                  14),
+                              maxLine: 1,
                               onChanged: (value) {
                                 context
                                     .read<LoginBloc>()
@@ -86,23 +79,15 @@ class _LoginScreenState extends State<LoginScreen> {
                             obscureText: true,
                             controller: password,
                             cursorColors: Colors.black,
-                            textStyle: textStyle(
-                                ColorsConstant.APP_PRIMARY_COLOR,
-                                FontWeight.w600,
-                                18),
-                            hintTextStyle: textStyle(
-                                ColorsConstant.APP_PRIMARY_COLOR,
-                                FontWeight.w600,
-                                16),
+                            textStyle:
+                                textStyle(Colors.black54, FontWeight.w600, 18),
+                            hintTextStyle:
+                                textStyle(Colors.grey, FontWeight.w600, 16),
                             placeholderText: 'Enter Your Password',
                             errorText: state.validPassword == false
                                 ? ' password length must be greater than 7'
                                 : null,
-
-                            errorTextStyle: textStyle(
-                                ColorsConstant.APP_PRIMARY_COLOR,
-                                FontWeight.w400,
-                                14),
+                            maxLine: 1,
                             onChanged: (value) {
                               context
                                   .read<LoginBloc>()
@@ -110,6 +95,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             },
                           ),
                           MaterialButtonWidget(
+                            width: 350,
                             onTap: () {
                               context.read<LoginBloc>().add(UserLoginEvent(
                                   email: emailControl.text,

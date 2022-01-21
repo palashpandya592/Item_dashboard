@@ -1,21 +1,12 @@
-class Item {
-  String? name;
-  int? mrp;
-  int? selling;
-  String? description;
-  String? image;
+import 'package:desktop_app_demo/model/product.dart';
 
-  Item({this.name, this.mrp, this.selling, this.description, this.image});
+class ProductDetail {
+  String? message;
+  Product? product;
 
-  static List<Item>? fromJsonArray(List<dynamic>? itemJsonList) {
-    List<Item>? itemList = itemJsonList?.map((e) => Item.fromJson(e)).toList();
-    return itemList;
-  }
+  ProductDetail({this.message, this.product});
 
-  Item.fromJson(Map<String, dynamic> json)
-      : name = json['name'],
-        mrp = json['mrp'],
-        selling = json['selling'],
-        description = json['description'],
-        image = json['img'];
+  ProductDetail.fromJson(Map<String, dynamic> json)
+      : message = json['message'],
+        product = Product.fromJson(json['data']);
 }

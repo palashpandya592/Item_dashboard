@@ -14,6 +14,8 @@ class TextFieldWidget extends StatefulWidget {
       this.errorTextStyle,
       this.onChanged,
       this.cursorColors,
+      this.textInputType,
+      this.maxLine,
       this.obscureText = false})
       : super(key: key);
   final TextEditingController? controller;
@@ -25,6 +27,9 @@ class TextFieldWidget extends StatefulWidget {
   final TextStyle? textStyle;
   final Color? cursorColors;
   final bool obscureText;
+  final int? maxLine;
+  final  TextInputType? textInputType;
+
 
   @override
   _TextFieldWidgetState createState() => _TextFieldWidgetState();
@@ -72,6 +77,8 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
         style: widget.textStyle,
         cursorColor: widget.cursorColors,
         onChanged: widget.onChanged,
+        maxLines: widget.maxLine,
+        keyboardType: widget.textInputType,
       ),
     );
   }

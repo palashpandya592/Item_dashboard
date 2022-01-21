@@ -20,8 +20,6 @@ class LoginAPI {
         data: formData);
     if (response.statusCode == 200) {
       return UserResponse.fromJson(response.data);
-    } else {
-      print('Request failed with status: ${response.statusCode}.');
     }
   }
 }
