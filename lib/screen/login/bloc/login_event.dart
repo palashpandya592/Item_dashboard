@@ -23,3 +23,7 @@ class PasswordChangeEvent extends LoginEvent {
 
   PasswordChangeEvent(this.password);
 }
+
+class DisableButton extends LoginEvent{
+
+}

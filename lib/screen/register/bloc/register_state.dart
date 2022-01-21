@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:file_picker/file_picker.dart';
 
 class RegisterState extends Equatable {
   final bool? isSuccessLogin;
@@ -10,8 +9,8 @@ class RegisterState extends Equatable {
   final bool? validConfirmPassword;
   final bool? validGender;
   final bool? birthDate;
-  final String? gender;
-  final String? password;
+  final bool? isFailedRegister;
+  final bool? isDisable;
 
   RegisterState copyWith({
     bool? isSuccessLogin,
@@ -24,6 +23,8 @@ class RegisterState extends Equatable {
     bool? birthDate,
     String? gender,
     String? password,
+    bool? isFailedRegister,
+    bool? isDisable,
   }) {
     return RegisterState(
       isSuccessLogin: isSuccessLogin ?? this.isSuccessLogin,
@@ -32,10 +33,10 @@ class RegisterState extends Equatable {
       validEmail: validEmail ?? this.validEmail,
       validPassword: validPassword ?? this.validPassword,
       validConfirmPassword: validConfirmPassword ?? this.validConfirmPassword,
-      gender: gender ?? this.gender,
       birthDate: birthDate ?? this.birthDate,
-      password: password ?? password,
-      validGender: validGender ?? validGender,
+      validGender: validGender ?? this.validGender,
+      isFailedRegister: isFailedRegister ?? this.isFailedRegister,
+      isDisable: isDisable ?? this.isDisable,
     );
   }
 
@@ -47,9 +48,9 @@ class RegisterState extends Equatable {
     this.validPassword = true,
     this.validConfirmPassword = true,
     this.birthDate = true,
-    this.gender,
-    this.validGender = false,
-    this.password,
+    this.validGender = true,
+    this.isFailedRegister = false,
+    this.isDisable = true,
   });
 
   @override
@@ -61,7 +62,8 @@ class RegisterState extends Equatable {
         validPassword,
         validConfirmPassword,
         birthDate,
-        gender,
-        password,
+        isFailedRegister,
+        isDisable,
+        validGender
       ];
 }

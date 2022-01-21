@@ -36,10 +36,16 @@ class _AddProductScreenState extends State<AddProductScreen> {
     super.initState();
     if (widget.product.id != null) {
       addProductBloc.add(ProductUpdateEventId(widget.product.id));
+
       name.text = widget.product.name!;
       description.text = widget.product.description!;
       mrp.text = widget.product.mrp!.toString();
       selling.text = widget.product.selling.toString();
+      addProductBloc.add(ProductSellChangeEvent(widget.product.selling));
+      addProductBloc.add(ProductMRPChangeEvent(widget.product.mrp));
+      addProductBloc
+          .add(ProductDescriptionChangeEvent(widget.product.description));
+      addProductBloc.add(ProductNameChangeEvent(widget.product.name));
     }
   }
 
@@ -124,9 +130,6 @@ class _AddProductScreenState extends State<AddProductScreen> {
                                   textStyle(Colors.grey, FontWeight.w600, 16),
                               placeholderText: 'Enter Product Name',
                               maxLine: 1,
-                              errorText: state.isName == false
-                                  ? 'required product_detail name'
-                                  : null,
                               onChanged: (value) {
                                 context
                                     .read<AddProductBloc>()
@@ -142,9 +145,6 @@ class _AddProductScreenState extends State<AddProductScreen> {
                               hintTextStyle:
                                   textStyle(Colors.grey, FontWeight.w600, 16),
                               placeholderText: 'Enter Description',
-                              errorText: state.validDescription == false
-                                  ? 'required product_detail description '
-                                  : null,
                               maxLine: 2,
                               onChanged: (value) {
                                 context
@@ -162,14 +162,10 @@ class _AddProductScreenState extends State<AddProductScreen> {
                                 textStyle(Colors.grey, FontWeight.w600, 16),
                             placeholderText: 'Enter MRP ',
                             textInputType: TextInputType.number,
-                            errorText: state.validMRP == false
-                                ? 'required product_detail mrp '
-                                : null,
                             maxLine: 1,
                             onChanged: (value) {
-                              context
-                                  .read<AddProductBloc>()
-                                  .add(ProductMRPChangeEvent(int.parse(value)));
+                              context.read<AddProductBloc>().add(
+                                  ProductMRPChangeEvent(int.tryParse(value)));
                             },
                           ),
                           TextFieldWidget(
@@ -182,27 +178,13 @@ class _AddProductScreenState extends State<AddProductScreen> {
                             placeholderText: 'Enter Sell Price',
                             textInputType: TextInputType.number,
                             maxLine: 1,
-                            errorText: state.validSellPrice == false
-                                ? 'required product_detail sell '
-                                : null,
                             onChanged: (value) {
                               context.read<AddProductBloc>().add(
-                                  ProductSellChangeEvent(int.parse(value)));
+                                  ProductSellChangeEvent(int.tryParse(value)));
                             },
                           ),
                           MaterialButtonWidget(
                             width: 350,
-                            onTap: () {
-                              context.read<AddProductBloc>().add(
-                                    SubmitProductEvent(
-                                      name: name.text,
-                                      description: description.text,
-                                      mrp: int.parse(mrp.text),
-                                      sellingPrice: int.parse(selling.text),
-                                      file: file,
-                                    ),
-                                  );
-                            },
                             child: state.isLoading == true
                                 ? const SizedBox(
                                     width: 26,
@@ -217,6 +199,20 @@ class _AddProductScreenState extends State<AddProductScreen> {
                                     style: textStyle(
                                         Colors.white, FontWeight.w600, 18),
                                   ),
+                            onTap: state.disable == false
+                                ? () => {
+                                      context.read<AddProductBloc>().add(
+                                            SubmitProductEvent(
+                                              name: name.text,
+                                              description: description.text,
+                                              mrp: int.parse(mrp.text),
+                                              sellingPrice:
+                                                  int.parse(selling.text),
+                                              file: file,
+                                            ),
+                                          )
+                                    }
+                                : null,
                           ),
                         ],
                       ),

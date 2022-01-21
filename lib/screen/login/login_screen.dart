@@ -3,6 +3,7 @@ import 'package:desktop_app_demo/util/colors_constant.dart';
 import 'package:desktop_app_demo/utilites/material_button.dart';
 import 'package:desktop_app_demo/utilites/style_extension.dart';
 import 'package:desktop_app_demo/utilites/text_field_widget.dart';
+import 'package:desktop_app_demo/utilites/text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'bloc/login_bloc.dart';
@@ -96,18 +97,13 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           MaterialButtonWidget(
                             width: 350,
-                            onTap: () {
-                              context.read<LoginBloc>().add(UserLoginEvent(
-                                  email: emailControl.text,
-                                  password: password.text));
-                            },
                             child: state.isLoading == true
                                 ? const SizedBox(
                                     width: 26,
                                     height: 26,
                                     child: CircularProgressIndicator(
                                       valueColor: AlwaysStoppedAnimation<Color>(
-                                          Colors.black),
+                                          Colors.white),
                                     ),
                                   )
                                 : Text(
@@ -115,6 +111,14 @@ class _LoginScreenState extends State<LoginScreen> {
                                     style: textStyle(
                                         Colors.white, FontWeight.w600, 18),
                                   ),
+                            onTap: state.disable == false
+                                ? () => {
+                                      context.read<LoginBloc>().add(
+                                          UserLoginEvent(
+                                              email: emailControl.text,
+                                              password: password.text))
+                                    }
+                                : null,
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -138,6 +142,15 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                               ),
                             ],
+                          ),
+                          const SizedBox(
+                            height: 40,
+                          ),
+                          TextWidget(
+                            text: state.isFailedLogin == true
+                                ? ' Invalid email or password '
+                                : '',
+                            style: textStyle(Colors.red, FontWeight.w600, 14),
                           )
                         ],
                       ),

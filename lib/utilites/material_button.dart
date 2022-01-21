@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 
 class MaterialButtonWidget extends StatefulWidget {
   const MaterialButtonWidget(
-      {Key? key, required this.onTap, required this.child,this.width})
+      {Key? key, required this.onTap, required this.child, this.width})
       : super(key: key);
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
   final Widget child;
-   final double? width;
+  final double? width;
 
   @override
   _MaterialButtonWidgetState createState() => _MaterialButtonWidgetState();
@@ -24,6 +24,8 @@ class _MaterialButtonWidgetState extends State<MaterialButtonWidget> {
         onPressed: widget.onTap,
         child: widget.child,
         textColor: Colors.white,
+        disabledColor: ColorsConstant.DISABLE_COLOR,
+        disabledTextColor: ColorsConstant.TEXT_DISABLE_COLOR,
         color: ColorsConstant.APP_PRIMARY_COLOR,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),

@@ -7,6 +7,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AddProductBloc extends Bloc<AddProductEvent, AddProductState> {
   int? id;
+  String? description;
+  String? name;
+  int? mrp;
+  int? selling;
 
   AddProductBloc() : super(const AddProductState()) {
     on<ProductUpdateEventId>(_productId);
@@ -97,37 +101,102 @@ class AddProductBloc extends Bloc<AddProductEvent, AddProductState> {
 
   void _addProductName(
       ProductNameChangeEvent event, Emitter<AddProductState> emit) async {
-    if (event.name != null) {
-      emit(state.copyWith(isName: true));
+    if (event.name!.isNotEmpty) {
+      name = event.name;
+      emit(state.copyWith(isName: true, disable: false));
+      // enable disable button  condition
+      if (state.isName == true &&
+          state.validSellPrice == true &&
+          state.validMRP == true &&
+          state.validDescription == true &&
+          name != null &&
+          description != null &&
+          mrp != null &&
+          selling != null) {
+        emit(state.copyWith(disable: false));
+      } else {
+        emit(state.copyWith(disable: true));
+      }
     } else {
-      emit(state.copyWith(isName: false));
+      emit(state.copyWith(isName: false, disable: true));
     }
   }
 
   void _addProductDescription(ProductDescriptionChangeEvent event,
       Emitter<AddProductState> emit) async {
-    if (event.description != null) {
-      emit(state.copyWith(validDescription: true));
+    if (event.description!.isNotEmpty) {
+      description = event.description;
+      emit(state.copyWith(validDescription: true, disable: false));
+
+
+      // enable disable button  condition
+      if (state.isName == true &&
+          state.validSellPrice == true &&
+          state.validMRP == true &&
+          state.validDescription == true &&
+          name != null &&
+          description != null &&
+          mrp != null &&
+          selling != null) {
+        emit(state.copyWith(disable: false));
+      } else {
+        emit(state.copyWith(disable: true));
+      }
     } else {
-      emit(state.copyWith(validDescription: false));
+      emit(state.copyWith(validDescription: false,disable: true));
     }
   }
 
   void _addProductMRP(
       ProductMRPChangeEvent event, Emitter<AddProductState> emit) async {
     if (event.mrp != null) {
-      emit(state.copyWith(validMRP: true));
+      mrp = event.mrp;
+      emit(state.copyWith(validMRP: true, disable: false));
+      print(
+          " inside the  name ${state.isName}, descr ${state.validDescription}  "
+          "mrp ${state.validMRP} sell ${state.validSellPrice}");
+
+      // enable disable button  condition
+      if (state.isName == true &&
+          state.validSellPrice == true &&
+          state.validMRP == true &&
+          state.validDescription == true &&
+          name != null &&
+          description != null &&
+          mrp != null &&
+          selling != null) {
+        emit(state.copyWith(disable: false));
+      } else {
+        emit(state.copyWith(disable: true));
+      }
     } else {
-      emit(state.copyWith(validMRP: false));
+      emit(state.copyWith(validMRP: false,disable: true));
     }
   }
 
   void _addProductSellPrice(
       ProductSellChangeEvent event, Emitter<AddProductState> emit) async {
     if (event.sellPrice != null) {
-      emit(state.copyWith(validSellPrice: true));
+      selling = event.sellPrice;
+      emit(state.copyWith(validSellPrice: true, disable: false));
+      print(
+          " inside the  name ${state.isName}, descr ${state.validDescription}  "
+          "mrp ${state.validMRP} sell ${state.validSellPrice}");
+      // enable disable button  condition
+      if (state.isName == true &&
+          state.validSellPrice == true &&
+          state.validMRP == true &&
+          state.validDescription == true &&
+          name != null &&
+          description != null &&
+          mrp != null &&
+          selling != null) {
+        emit(state.copyWith(disable: false));
+      } else {
+        emit(state.copyWith(disable: true));
+      }
     } else {
-      emit(state.copyWith(validSellPrice: false));
+      emit(state.copyWith(validSellPrice: false,disable: true));
     }
   }
 }

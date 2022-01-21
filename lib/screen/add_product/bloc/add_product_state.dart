@@ -7,6 +7,7 @@ class AddProductState extends Equatable {
   final bool? validDescription;
   final bool? validMRP;
   final bool? validSellPrice;
+  final bool? disable;
 
   AddProductState copyWith({
     bool? isSuccessAddProduct,
@@ -15,24 +16,28 @@ class AddProductState extends Equatable {
     bool? validDescription,
     bool? validMRP,
     bool? validSellPrice,
+    bool? disable,
   }) {
     return AddProductState(
-      isSuccessAddProduct: isSuccessAddProduct ?? isSuccessAddProduct,
-      isLoading: isLoading ?? isLoading,
-      isName: isName ?? isName,
-      validDescription: validDescription ?? validDescription,
-      validMRP: validMRP ?? validMRP,
-      validSellPrice: validSellPrice ?? validSellPrice,
+      isSuccessAddProduct: isSuccessAddProduct ?? this.isSuccessAddProduct,
+      isLoading: isLoading ?? this.isLoading,
+      isName: isName ?? this.isName,
+      validDescription: validDescription ?? this.validDescription,
+      validMRP: validMRP ?? this.validMRP,
+      validSellPrice: validSellPrice ?? this.validSellPrice,
+      disable: disable ?? this.disable,
     );
   }
 
-  const AddProductState(
-      {this.isSuccessAddProduct,
-      this.isName,
-      this.isLoading,
-      this.validDescription,
-      this.validMRP,
-      this.validSellPrice});
+  const AddProductState({
+    this.isSuccessAddProduct,
+    this.isName = false,
+    this.isLoading,
+    this.validDescription = false,
+    this.validMRP = false,
+    this.validSellPrice = false,
+    this.disable=true,
+  });
 
   @override
   List<Object?> get props => [
@@ -41,6 +46,7 @@ class AddProductState extends Equatable {
         isLoading,
         validSellPrice,
         validMRP,
-        validDescription
+        validDescription,
+        disable
       ];
 }

@@ -5,7 +5,7 @@ import 'package:desktop_app_demo/route/route_name.dart';
 import 'package:flutter/material.dart';
 
 class LaunchScreen extends StatefulWidget {
-  const LaunchScreen({Key? key,this.child}) : super(key: key);
+  const LaunchScreen({Key? key, this.child}) : super(key: key);
   final Widget? child;
 
   @override

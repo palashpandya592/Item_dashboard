@@ -40,10 +40,10 @@ dependencies:
   dio: ^4.0.4
   shared_preferences: ^2.0.7
   fluttertoast: ^8.0.8
-  image_picker: ^0.8.1
   cached_network_image: ^3.2.0
   table_calendar: ^3.0.3
   file_picker: ^4.3.2
+  overlay_support: ^1.2.1
 
 
 dev_dependencies:

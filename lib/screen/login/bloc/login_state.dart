@@ -6,19 +6,23 @@ class LoginState extends Equatable {
   final bool? isFailedLogin;
   final bool? validEmail;
   final bool? validPassword;
+  final bool? disable;
 
-  LoginState copyWith(
-      {bool? isSuccessLogin,
-      bool? isLoading,
-      bool? isFailedLogin,
-      bool? validEmail,
-      bool? validPassword}) {
+  LoginState copyWith({
+    bool? isSuccessLogin,
+    bool? isLoading,
+    bool? isFailedLogin,
+    bool? validEmail,
+    bool? validPassword,
+    bool? disable,
+  }) {
     return LoginState(
       isSuccessLogin: isSuccessLogin ?? this.isSuccessLogin,
       isLoading: isLoading ?? this.isLoading,
       isFailedLogin: isFailedLogin ?? this.isFailedLogin,
       validEmail: validEmail ?? this.validEmail,
       validPassword: validPassword ?? this.validPassword,
+      disable: disable ?? this.disable,
     );
   }
 
@@ -26,11 +30,19 @@ class LoginState extends Equatable {
     this.isSuccessLogin,
     this.isLoading = false,
     this.isFailedLogin = false,
-    this.validEmail = true,
-    this.validPassword = true,
+    this.validEmail,
+    this.validPassword,
+    this.disable = true,
+
   });
 
   @override
-  List<Object?> get props =>
-      [isSuccessLogin, isLoading, isFailedLogin, validEmail, validPassword];
+  List<Object?> get props => [
+        isSuccessLogin,
+        isLoading,
+        isFailedLogin,
+        validEmail,
+        validPassword,
+        disable,
+      ];
 }
