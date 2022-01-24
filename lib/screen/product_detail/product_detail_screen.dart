@@ -72,7 +72,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       onTap: () {
                         AlertDialog alert = AlertDialog(
                           content: TextWidget(
-                              text: 'Are your sure delete this product_detail',
+                              text: 'Are your sure delete this product',
                               style:
                                   textStyle(Colors.black, FontWeight.w500, 16)),
                           actions: [

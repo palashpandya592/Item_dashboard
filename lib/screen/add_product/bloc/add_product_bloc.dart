@@ -105,18 +105,7 @@ class AddProductBloc extends Bloc<AddProductEvent, AddProductState> {
       name = event.name;
       emit(state.copyWith(isName: true, disable: false));
       // enable disable button  condition
-      if (state.isName == true &&
-          state.validSellPrice == true &&
-          state.validMRP == true &&
-          state.validDescription == true &&
-          name != null &&
-          description != null &&
-          mrp != null &&
-          selling != null) {
-        emit(state.copyWith(disable: false));
-      } else {
-        emit(state.copyWith(disable: true));
-      }
+         buttonEnableDisable(emit);
     } else {
       emit(state.copyWith(isName: false, disable: true));
     }
@@ -130,18 +119,7 @@ class AddProductBloc extends Bloc<AddProductEvent, AddProductState> {
 
 
       // enable disable button  condition
-      if (state.isName == true &&
-          state.validSellPrice == true &&
-          state.validMRP == true &&
-          state.validDescription == true &&
-          name != null &&
-          description != null &&
-          mrp != null &&
-          selling != null) {
-        emit(state.copyWith(disable: false));
-      } else {
-        emit(state.copyWith(disable: true));
-      }
+         buttonEnableDisable(emit);
     } else {
       emit(state.copyWith(validDescription: false,disable: true));
     }
@@ -152,23 +130,9 @@ class AddProductBloc extends Bloc<AddProductEvent, AddProductState> {
     if (event.mrp != null) {
       mrp = event.mrp;
       emit(state.copyWith(validMRP: true, disable: false));
-      print(
-          " inside the  name ${state.isName}, descr ${state.validDescription}  "
-          "mrp ${state.validMRP} sell ${state.validSellPrice}");
 
       // enable disable button  condition
-      if (state.isName == true &&
-          state.validSellPrice == true &&
-          state.validMRP == true &&
-          state.validDescription == true &&
-          name != null &&
-          description != null &&
-          mrp != null &&
-          selling != null) {
-        emit(state.copyWith(disable: false));
-      } else {
-        emit(state.copyWith(disable: true));
-      }
+        buttonEnableDisable(emit);
     } else {
       emit(state.copyWith(validMRP: false,disable: true));
     }
@@ -179,24 +143,26 @@ class AddProductBloc extends Bloc<AddProductEvent, AddProductState> {
     if (event.sellPrice != null) {
       selling = event.sellPrice;
       emit(state.copyWith(validSellPrice: true, disable: false));
-      print(
-          " inside the  name ${state.isName}, descr ${state.validDescription}  "
-          "mrp ${state.validMRP} sell ${state.validSellPrice}");
+
       // enable disable button  condition
-      if (state.isName == true &&
-          state.validSellPrice == true &&
-          state.validMRP == true &&
-          state.validDescription == true &&
-          name != null &&
-          description != null &&
-          mrp != null &&
-          selling != null) {
-        emit(state.copyWith(disable: false));
-      } else {
-        emit(state.copyWith(disable: true));
-      }
+        buttonEnableDisable(emit);
     } else {
       emit(state.copyWith(validSellPrice: false,disable: true));
     }
   }
+
+   buttonEnableDisable(Emitter<AddProductState> emit){
+     if (state.isName == true &&
+         state.validSellPrice == true &&
+         state.validMRP == true &&
+         state.validDescription == true &&
+         name != null &&
+         description != null &&
+         mrp != null &&
+         selling != null) {
+       emit(state.copyWith(disable: false));
+     } else {
+       emit(state.copyWith(disable: true));
+     }
+   }
 }

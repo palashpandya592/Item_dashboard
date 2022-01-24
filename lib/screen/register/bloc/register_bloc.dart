@@ -94,26 +94,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
       ));
 
       // btn enable disable condition
-      if (state.validEmail == true &&
-          state.validPassword == true &&
-          state.isName == true &&
-          state.validGender == true &&
-          state.birthDate == true &&
-          state.validConfirmPassword == true &&
-          isEmail != null &&
-          password != null &&
-          confirmPassword != null &&
-          dateOfBirth != null &&
-          name != null &&
-          gender != null) {
-        emit(state.copyWith(
-          isDisable: false,
-        ));
-      } else {
-        emit(state.copyWith(
-          isDisable: true,
-        ));
-      }
+      buttonEnableDisable(emit);
     } else {
       emit(state.copyWith(
         isName: false,
@@ -137,26 +118,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
       ));
 
       // btn enable disable condition
-      if (state.validEmail == true &&
-          state.validPassword == true &&
-          state.isName == true &&
-          state.validGender == true &&
-          state.birthDate == true &&
-          state.validConfirmPassword == true &&
-          isEmail != null &&
-          password != null &&
-          confirmPassword != null &&
-          dateOfBirth != null &&
-          name != null &&
-          gender != null) {
-        emit(state.copyWith(
-          isDisable: false,
-        ));
-      } else {
-        emit(state.copyWith(
-          isDisable: true,
-        ));
-      }
+      buttonEnableDisable(emit);
     } else {
       emit(state.copyWith(
         validEmail: false,
@@ -182,30 +144,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
       );
 
       // btn enable disable condition
-      if (state.validEmail == true &&
-          state.validPassword == true &&
-          state.isName == true &&
-          state.validGender == true &&
-          state.birthDate == true &&
-          state.validConfirmPassword == true &&
-          isEmail != null &&
-          password != null &&
-          confirmPassword != null &&
-          dateOfBirth != null &&
-          name != null &&
-          gender != null) {
-        emit(
-          state.copyWith(
-            isDisable: false,
-          ),
-        );
-      } else {
-        emit(
-          state.copyWith(
-            isDisable: true,
-          ),
-        );
-      }
+      buttonEnableDisable(emit);
     } else {
       emit(state.copyWith(
         validPassword: false,
@@ -229,26 +168,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
       ));
 
       // btn enable disable condition
-      if (state.validEmail == true &&
-          state.validPassword == true &&
-          state.isName == true &&
-          state.validGender == true &&
-          state.birthDate == true &&
-          state.validConfirmPassword == true &&
-          isEmail != null &&
-          password != null &&
-          confirmPassword != null &&
-          dateOfBirth != null &&
-          name != null &&
-          gender != null) {
-        emit(state.copyWith(
-          isDisable: false,
-        ));
-      } else {
-        emit(state.copyWith(
-          isDisable: true,
-        ));
-      }
+      buttonEnableDisable(emit);
     } else {
       emit(state.copyWith(
         validConfirmPassword: false,
@@ -270,26 +190,8 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
 
       //button enable disable condition
       // btn enable disable condition
-      if (state.validEmail == true &&
-          state.validPassword == true &&
-          state.isName == true &&
-          state.validGender == true &&
-          state.birthDate == true &&
-          state.validConfirmPassword == true &&
-          isEmail != null &&
-          password != null &&
-          confirmPassword != null &&
-          dateOfBirth != null &&
-          name != null &&
-          gender != null) {
-        emit(state.copyWith(
-          isDisable: false,
-        ));
-      } else {
-        emit(state.copyWith(
-          isDisable: true,
-        ));
-      }
+
+      buttonEnableDisable(emit);
     } else {
       emit(state.copyWith(birthDate: false, isDisable: true));
     }
@@ -306,26 +208,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
       emit(state.copyWith(validGender: true, isDisable: false));
 
       // btn enable disable condition
-      if (state.validEmail == true &&
-          state.validPassword == true &&
-          state.isName == true &&
-          state.validGender == true &&
-          state.birthDate == true &&
-          state.validConfirmPassword == true &&
-          isEmail != null &&
-          password != null &&
-          confirmPassword != null &&
-          dateOfBirth != null &&
-          name != null &&
-          gender != null) {
-        emit(state.copyWith(
-          isDisable: false,
-        ));
-      } else {
-        emit(state.copyWith(
-          isDisable: true,
-        ));
-      }
+      buttonEnableDisable(emit);
     } else {
       emit(state.copyWith(validGender: false, isDisable: true));
     }
@@ -338,5 +221,28 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
 
   void _filePicker(FilePickerEvent event, Emitter<RegisterState> emit) async {
     if (event.file != null) {}
+  }
+
+  buttonEnableDisable(Emitter<RegisterState> emit) {
+    if (state.validEmail == true &&
+        state.validPassword == true &&
+        state.isName == true &&
+        state.validGender == true &&
+        state.birthDate == true &&
+        state.validConfirmPassword == true &&
+        isEmail != null &&
+        password != null &&
+        confirmPassword != null &&
+        dateOfBirth != null &&
+        name != null &&
+        gender != null) {
+      emit(state.copyWith(
+        isDisable: false,
+      ));
+    } else {
+      emit(state.copyWith(
+        isDisable: true,
+      ));
+    }
   }
 }
