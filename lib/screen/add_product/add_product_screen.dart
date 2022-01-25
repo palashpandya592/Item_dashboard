@@ -74,7 +74,8 @@ class _AddProductScreenState extends State<AddProductScreen> {
           builder: (context, state) {
             return Scaffold(
               appBar: AppBar(
-                title: const Text('Add Product Screen'),
+                title:  Text( widget.product.id ==null
+                    ?'Add Product Screen':'Update Product Screen '),
                 backgroundColor: ColorsConstant.APP_PRIMARY_COLOR,
               ),
               body: Row(
@@ -234,7 +235,8 @@ class _AddProductScreenState extends State<AddProductScreen> {
                                       ),
                                     )
                                   : Text(
-                                      'Add Product',
+                                widget.product.id ==null
+                                    ?'Add Product':'Update Product  ',
                                       style: textStyle(
                                           Colors.white, FontWeight.w600, 18),
                                     ),
