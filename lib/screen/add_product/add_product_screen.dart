@@ -30,12 +30,15 @@ class _AddProductScreenState extends State<AddProductScreen> {
   TextEditingController selling = TextEditingController();
   AddProductBloc addProductBloc = AddProductBloc();
   PlatformFile? file;
+  bool isVisible = true;
+
 
   @override
   void initState() {
     super.initState();
     if (widget.product.id != null) {
       addProductBloc.add(ProductUpdateEventId(widget.product.id));
+       isVisible =false;
 
       name.text = widget.product.name!;
       description.text = widget.product.description!;
@@ -118,33 +121,36 @@ class _AddProductScreenState extends State<AddProductScreen> {
                             const SizedBox(
                               height: 60,
                             ),
-                            Container(
-                              width: 334,
-                              height: 52,
-                              padding: const EdgeInsets.all(2),
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: ColorsConstant.APP_PRIMARY_COLOR,
-                                  width: 2,
+                            Visibility(
+                              visible:isVisible,
+                              child: Container(
+                                width: 334,
+                                height: 52,
+                                padding: const EdgeInsets.all(2),
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: ColorsConstant.APP_PRIMARY_COLOR,
+                                    width: 2,
+                                  ),
+                                  borderRadius: BorderRadius.circular(2),
                                 ),
-                                borderRadius: BorderRadius.circular(2),
-                              ),
-                              child: InkWell(
-                                onTap: () async {
-                                  var pickedFile = await FilePicker.platform
-                                      .pickFiles(type: FileType.image);
-                                  file = pickedFile?.files.single;
+                                child: InkWell(
+                                  onTap: () async {
+                                    var pickedFile = await FilePicker.platform
+                                        .pickFiles(type: FileType.image);
+                                    file = pickedFile?.files.single;
 
-                                  context
-                                      .read<AddProductBloc>()
-                                      .add(ProductImageEvent(file!));
-                                },
-                                child: LabelFieldWidget(
-                                  textLabel: 'Upload Product Picture ',
-                                  textStyle: textStyle(
-                                      Colors.black54, FontWeight.w600, 16),
-                                  icon: Icons.drive_folder_upload,
-                                  iconColor: Colors.black54,
+                                    context
+                                        .read<AddProductBloc>()
+                                        .add(ProductImageEvent(file!));
+                                  },
+                                  child: LabelFieldWidget(
+                                    textLabel: 'Upload Product Picture ',
+                                    textStyle: textStyle(
+                                        Colors.black54, FontWeight.w600, 16),
+                                    icon: Icons.drive_folder_upload,
+                                    iconColor: Colors.black54,
+                                  ),
                                 ),
                               ),
                             ),
@@ -157,7 +163,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                                 textStyle: textStyle(
                                     Colors.black54, FontWeight.w600, 18),
                                 hintTextStyle:
-                                    textStyle(Colors.grey, FontWeight.w600, 16),
+                                textStyle(Colors.grey, FontWeight.w600, 16),
                                 placeholderText: 'Enter Product Name',
                                 maxLine: 1,
                                 onChanged: (value) {
@@ -176,7 +182,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                                 textStyle: textStyle(
                                     Colors.black54, FontWeight.w600, 18),
                                 hintTextStyle:
-                                    textStyle(Colors.grey, FontWeight.w600, 16),
+                                textStyle(Colors.grey, FontWeight.w600, 16),
                                 placeholderText: 'Enter Description',
                                 maxLine: 2,
                                 onChanged: (value) {
@@ -194,7 +200,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                               textStyle: textStyle(
                                   Colors.black54, FontWeight.w600, 18),
                               hintTextStyle:
-                                  textStyle(Colors.grey, FontWeight.w600, 16),
+                              textStyle(Colors.grey, FontWeight.w600, 16),
                               placeholderText: 'Enter MRP ',
                               textInputType: TextInputType.number,
                               maxLine: 1,
@@ -212,7 +218,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                               textStyle: textStyle(
                                   Colors.black54, FontWeight.w600, 18),
                               hintTextStyle:
-                                  textStyle(Colors.grey, FontWeight.w600, 16),
+                              textStyle(Colors.grey, FontWeight.w600, 16),
                               placeholderText: 'Enter Sell Price',
                               textInputType: TextInputType.number,
                               maxLine: 1,
@@ -229,34 +235,35 @@ class _AddProductScreenState extends State<AddProductScreen> {
                               width: 350,
                               child: state.isLoading == true
                                   ? const SizedBox(
-                                      width: 26,
-                                      height: 26,
-                                      child: CircularProgressIndicator(
-                                        valueColor:
-                                            AlwaysStoppedAnimation<Color>(
-                                                Colors.black),
-                                      ),
-                                    )
+                                width: 26,
+                                height: 26,
+                                child: CircularProgressIndicator(
+                                  valueColor:
+                                  AlwaysStoppedAnimation<Color>(
+                                      Colors.black),
+                                ),
+                              )
                                   : Text(
-                                      widget.product.id == null
-                                          ? 'Add Product'
-                                          : 'Update Product  ',
-                                      style: textStyle(
-                                          Colors.white, FontWeight.w600, 18),
-                                    ),
+                                widget.product.id == null
+                                    ? 'Add Product'
+                                    : 'Update Product  ',
+                                style: textStyle(
+                                    Colors.white, FontWeight.w600, 18),
+                              ),
                               onTap: state.disable == false
-                                  ? () => {
-                                        context.read<AddProductBloc>().add(
-                                              SubmitProductEvent(
-                                                name: name.text,
-                                                description: description.text,
-                                                mrp: int.parse(mrp.text),
-                                                sellingPrice:
-                                                    int.parse(selling.text),
-                                                file: file,
-                                              ),
-                                            )
-                                      }
+                                  ? () =>
+                              {
+                                context.read<AddProductBloc>().add(
+                                  SubmitProductEvent(
+                                    name: name.text,
+                                    description: description.text,
+                                    mrp: int.parse(mrp.text),
+                                    sellingPrice:
+                                    int.parse(selling.text),
+                                    file: file,
+                                  ),
+                                )
+                              }
                                   : null,
                             ),
                           ],

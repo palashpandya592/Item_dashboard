@@ -119,8 +119,7 @@ class ProductAPI {
           'description': product.description,
           'mrp': product.mrp,
           'selling': product.selling,
-          'image':
-              await MultipartFile.fromFile(file.path!, filename: file.name),
+          'image': MultipartFile.fromFile(file.path!, filename: file.name),
         });
 
     if (response.statusCode == 200) {
