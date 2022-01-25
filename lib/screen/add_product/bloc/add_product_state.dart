@@ -8,6 +8,7 @@ class AddProductState extends Equatable {
   final bool? validMRP;
   final bool? validSellPrice;
   final bool? disable;
+  final int? id;
 
   AddProductState copyWith({
     bool? isSuccessAddProduct,
@@ -17,6 +18,7 @@ class AddProductState extends Equatable {
     bool? validMRP,
     bool? validSellPrice,
     bool? disable,
+    int? id,
   }) {
     return AddProductState(
       isSuccessAddProduct: isSuccessAddProduct ?? this.isSuccessAddProduct,
@@ -26,17 +28,19 @@ class AddProductState extends Equatable {
       validMRP: validMRP ?? this.validMRP,
       validSellPrice: validSellPrice ?? this.validSellPrice,
       disable: disable ?? this.disable,
+      id: id ?? id,
     );
   }
 
   const AddProductState({
-    this.isSuccessAddProduct,
+    this.isSuccessAddProduct = false,
     this.isName = false,
     this.isLoading,
     this.validDescription = false,
     this.validMRP = false,
     this.validSellPrice = false,
-    this.disable=true,
+    this.disable = true,
+    this.id,
   });
 
   @override
@@ -47,6 +51,7 @@ class AddProductState extends Equatable {
         validSellPrice,
         validMRP,
         validDescription,
-        disable
+        disable,
+        id
       ];
 }

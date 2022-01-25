@@ -22,22 +22,22 @@ class RouteGenerator {
         return GeneratePageRoute(
             widget: const ProductListScreen(), routeName: settings.name!);
       case RoutesName.PRODUCT_PAGE:
-        if (settings.arguments is int) {
-          return GeneratePageRoute(
-              widget: ProductDetailScreen(id: ((settings.arguments as int))),
-              routeName: settings.name!);
-        }
-        break;
+        List<dynamic> args = settings.arguments as List;
 
-      case RoutesName.ADD_PRODUCT_PAGE:
-        if (settings.arguments is Product) {
           return GeneratePageRoute(
-              widget: AddProductScreen(
-                product: settings.arguments as Product,
+              widget: ProductDetailScreen(id: args[0],callBack: args[1],
               ),
               routeName: settings.name!);
-        }
-        break;
+
+
+      case RoutesName.ADD_PRODUCT_PAGE:
+        List<dynamic> args = settings.arguments as List;
+        return GeneratePageRoute(
+            widget: AddProductScreen(
+              product: args[0],
+              callBack: args[1],
+            ),
+            routeName: settings.name!);
       default:
         return GeneratePageRoute(
             widget: const LaunchScreen(), routeName: settings.name!);

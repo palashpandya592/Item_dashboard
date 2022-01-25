@@ -1,8 +1,7 @@
-import 'dart:io';
-
 import 'package:desktop_app_demo/screen/register/bloc/register_bloc.dart';
 import 'package:desktop_app_demo/screen/register/bloc/register_event.dart';
 import 'package:desktop_app_demo/screen/register/bloc/register_state.dart';
+import 'package:desktop_app_demo/util/Responsive.dart';
 import 'package:desktop_app_demo/util/colors_constant.dart';
 import 'package:desktop_app_demo/utilites/label_field.dart';
 import 'package:desktop_app_demo/utilites/material_button.dart';
@@ -44,12 +43,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
         child: BlocBuilder<RegisterBloc, RegisterState>(
           builder: (context, state) {
             return Scaffold(
-                appBar: AppBar(
-                  automaticallyImplyLeading: true,
+              appBar: AppBar(
+                title: const TextWidget(
+                  text: 'Register Screen',
                 ),
-                body: Row(
-                  children: [
-                    Expanded(
+                automaticallyImplyLeading: true,
+              ),
+              body: Row(
+                children: [
+                  Visibility(
+                    visible: Responsive().getResponsiveValue(
+                        forLargeScreen: true,
+                        forMobileScreen: false,
+                        forMediumScreen: true,
+                        forShortScreen: false,
+                        forMobLandScapeMode: false,
+                        context: context),
+                    child: Expanded(
                       flex: 1,
                       child: Container(
                         decoration: const BoxDecoration(
@@ -65,14 +75,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                       ),
                     ),
-                    Expanded(
-                      flex: 1,
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: SingleChildScrollView(
                       child: Center(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
+                            const SizedBox(
+                              height: 60,
+                            ),
                             Container(
-                              width: 338,
+                              width: 334,
                               height: 52,
                               padding: const EdgeInsets.all(2),
                               decoration: BoxDecoration(
@@ -93,13 +108,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                       .add(FilePickerEvent(file));
                                 },
                                 child: LabelFieldWidget(
-                                  textLabel: 'Upload File ',
+                                  textLabel: 'Upload Profile Picture ',
                                   textStyle: textStyle(
                                       Colors.black54, FontWeight.w600, 16),
                                   icon: Icons.drive_folder_upload,
                                   iconColor: Colors.black54,
                                 ),
                               ),
+                            ),
+                            const SizedBox(
+                              height: 8,
                             ),
                             TextFieldWidget(
                               controller: name,
@@ -111,13 +129,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               placeholderText: 'Enter Your Name',
                               maxLine: 1,
                               errorText: state.isName == false
-                                  ? 'please enter valid name'
+                                  ? 'Please enter valid name'
                                   : null,
                               onChanged: (value) {
                                 context
                                     .read<RegisterBloc>()
                                     .add(NameChangeEvent(value));
                               },
+                            ),
+                            const SizedBox(
+                              height: 8,
                             ),
                             TextFieldWidget(
                               controller: email,
@@ -127,7 +148,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               hintTextStyle:
                                   textStyle(Colors.grey, FontWeight.w600, 16),
                               errorText: state.validEmail == false
-                                  ? 'please enter valid email'
+                                  ? 'Please enter valid email'
                                   : null,
                               maxLine: 1,
                               placeholderText: 'Enter Your Email',
@@ -136,6 +157,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     .read<RegisterBloc>()
                                     .add(EmailChangeEvent(value));
                               },
+                            ),
+                            const SizedBox(
+                              height: 8,
                             ),
                             TextFieldWidget(
                               controller: password,
@@ -146,15 +170,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               hintTextStyle:
                                   textStyle(Colors.grey, FontWeight.w600, 16),
                               errorText: state.validPassword == false
-                                  ? "password length must be greater than 7"
+                                  ? "Password length must be greater than 7"
                                   : null,
                               maxLine: 1,
+                              textInputType: TextInputType.number,
                               placeholderText: 'Enter Password',
                               onChanged: (value) {
                                 context
                                     .read<RegisterBloc>()
                                     .add(PasswordChangeEvent(value));
                               },
+                            ),
+                            const SizedBox(
+                              height: 8,
                             ),
                             TextFieldWidget(
                               obscureText: true,
@@ -165,8 +193,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               hintTextStyle:
                                   textStyle(Colors.grey, FontWeight.w600, 16),
                               errorText: state.validConfirmPassword == false
-                                  ? 'please match password'
+                                  ? 'Please match password'
                                   : null,
+                              textInputType: TextInputType.number,
                               maxLine: 1,
                               placeholderText: 'Enter ConfirmPassword',
                               onChanged: (value) {
@@ -174,6 +203,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     .read<RegisterBloc>()
                                     .add(ConfirmPasswordChangeEvent(value));
                               },
+                            ),
+                            const SizedBox(
+                              height: 8,
                             ),
                             TextFieldWidget(
                               controller: birthDate,
@@ -183,15 +215,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               hintTextStyle:
                                   textStyle(Colors.grey, FontWeight.w600, 16),
                               errorText: state.birthDate == false
-                                  ? 'please enter dob'
+                                  ? 'Please enter dob'
                                   : null,
                               maxLine: 1,
                               placeholderText: 'Provide DOB dd-mm-yy ',
+                              textInputType: TextInputType.number,
                               onChanged: (value) {
                                 context
                                     .read<RegisterBloc>()
                                     .add(BirthDateChangeEvent(value));
                               },
+                            ),
+                            const SizedBox(
+                              height: 8,
                             ),
                             TextFieldWidget(
                               controller: gender,
@@ -201,7 +237,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               hintTextStyle:
                                   textStyle(Colors.grey, FontWeight.w600, 16),
                               errorText: state.validGender == false
-                                  ? 'please enter gender'
+                                  ? 'Please enter gender'
                                   : null,
                               maxLine: 1,
                               placeholderText: 'Please Enter Gender ',
@@ -248,9 +284,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ],
                         ),
                       ),
-                    )
-                  ],
-                ));
+                    ),
+                  ),
+                ],
+              ),
+            );
           },
         ),
       ),

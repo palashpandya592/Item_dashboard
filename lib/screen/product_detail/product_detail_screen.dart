@@ -1,6 +1,8 @@
+import 'package:desktop_app_demo/model/product.dart';
 import 'package:desktop_app_demo/route/route_name.dart';
 import 'package:desktop_app_demo/screen/product_detail/bloc/product_detail_event.dart';
 import 'package:desktop_app_demo/screen/product_detail/bloc/product_detail_state.dart';
+import 'package:desktop_app_demo/util/Responsive.dart';
 import 'package:desktop_app_demo/utilites/label_field.dart';
 import 'package:desktop_app_demo/utilites/material_button.dart';
 import 'package:desktop_app_demo/utilites/style_extension.dart';
@@ -11,8 +13,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'bloc/product_detail_bloc.dart';
 
 class ProductDetailScreen extends StatefulWidget {
-  const ProductDetailScreen({Key? key, required this.id}) : super(key: key);
+  const ProductDetailScreen({Key? key, required this.id, this.callBack})
+      : super(key: key);
   final int id;
+  final Function? callBack;
 
   @override
   _ProductDetailScreenState createState() => _ProductDetailScreenState();
@@ -25,6 +29,16 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+  }
+
+  void callBack(Product? product) {
+    if (product != null) {
+
+      productBloc.add(ProductUpdateEvent(product));
+    }
+    if (widget.callBack != null) {
+      widget.callBack!(product);
+    }
   }
 
   @override
@@ -47,19 +61,19 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
 
             return Scaffold(
               appBar: AppBar(
-                title: const Text('Product Detail Screen'),
+                title: const Text('Product Detail'),
                 actions: [
                   Padding(
-                    padding: const EdgeInsets.only(right: 40),
+                    padding: const EdgeInsets.only(right: 10),
                     child: InkWell(
                       onTap: () async {
-                        var product = state.productDetail!.product;
+                        var product = state.productDetail!;
                         Navigator.pushNamed(
                             context, RoutesName.ADD_PRODUCT_PAGE,
-                            arguments: product);
+                            arguments: [product, callBack]);
                       },
                       child: LabelFieldWidget(
-                        textLabel: 'Edit Product',
+                        textLabel: '',
                         textStyle: textStyle(Colors.white, FontWeight.w600, 16),
                         icon: Icons.edit,
                         iconColor: Colors.white,
@@ -67,7 +81,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(right: 40),
+                    padding: const EdgeInsets.only(right: 10),
                     child: InkWell(
                       onTap: () {
                         AlertDialog alert = AlertDialog(
@@ -110,7 +124,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         );
                       },
                       child: LabelFieldWidget(
-                        textLabel: 'Delete Product',
+                        textLabel: '',
                         textStyle: textStyle(Colors.white, FontWeight.w600, 16),
                         icon: Icons.delete,
                         iconColor: Colors.white,
@@ -120,33 +134,42 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 ],
               ),
               body: state.productDetail != null
-                  ? Container(
+                  ? SingleChildScrollView(
                       padding: const EdgeInsets.all(16),
                       child: Center(
                         child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Expanded(
-                              flex: 1,
-                              child: Card(
-                                margin: const EdgeInsets.all(8),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8.0),
-                                ),
-                                child: state.productDetail!.product!.image !=
-                                        null
-                                    ? FadeInImage.assetNetwork(
-                                        height: 600,
-                                        width: 150,
-                                        placeholder: 'assets/images/donut.png',
-                                        image: state
-                                            .productDetail!.product!.image!)
-                                    : SizedBox(
-                                        height: 1000,
-                                        width: 150,
-                                        child: Image.asset(
-                                          'assets/images/samsung.jpeg',
+                            Visibility(
+                              visible: Responsive().getResponsiveValue(
+                                  forLargeScreen: true,
+                                  forMobileScreen: false,
+                                  forMediumScreen: true,
+                                  forShortScreen: false,
+                                  forMobLandScapeMode: false,
+                                  context: context),
+                              child: Expanded(
+                                flex: 1,
+                                child: Card(
+                                  margin: const EdgeInsets.all(8),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8.0),
+                                  ),
+                                  child: state.productDetail!.image != null
+                                      ? FadeInImage.assetNetwork(
+                                          height: 600,
+                                          width: 150,
+                                          placeholder:
+                                              'assets/images/samsung.jpeg',
+                                          image: state.productDetail!.image!)
+                                      : SizedBox(
+                                          height: 600,
+                                          width: 150,
+                                          child: Image.asset(
+                                            'assets/images/samsung.jpeg',
+                                          ),
                                         ),
-                                      ),
+                                ),
                               ),
                             ),
                             Expanded(
@@ -154,13 +177,50 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  const SizedBox(
-                                    height: 150.0,
+                                  SizedBox(
+                                    height: Responsive().getResponsiveValue(
+                                        forLargeScreen: 80.0,
+                                        forMobileScreen: 30.0,
+                                        forMediumScreen: 80.0,
+                                        forShortScreen: 30.0,
+                                        forMobLandScapeMode: 30.0,
+                                        context: context),
+                                  ),
+                                  Visibility(
+                                    visible: Responsive().getResponsiveValue(
+                                        forLargeScreen: false,
+                                        forMobileScreen: true,
+                                        forMediumScreen: false,
+                                        forShortScreen: true,
+                                        forMobLandScapeMode: false,
+                                        context: context),
+                                    child: Card(
+                                      margin: const EdgeInsets.all(8),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                      ),
+                                      child: state.productDetail!.image != null
+                                          ? FadeInImage.assetNetwork(
+                                              height: 200,
+                                              width: 150,
+                                              placeholder:
+                                                  'assets/images/samsung.jpeg',
+                                              image:
+                                                  state.productDetail!.image!)
+                                          : SizedBox(
+                                              height: 200,
+                                              width: 150,
+                                              child: Image.asset(
+                                                'assets/images/samsung.jpeg',
+                                              ),
+                                            ),
+                                    ),
                                   ),
                                   Container(
                                     padding: const EdgeInsets.only(left: 16),
                                     child: TextWidget(
-                                      text: state.productDetail!.product!.name!,
+                                      text: state.productDetail!.name!,
                                       style: textStyle(const Color(0xff262626),
                                           FontWeight.w600, 24),
                                       align: TextAlign.start,
@@ -172,8 +232,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                   Container(
                                     padding: const EdgeInsets.only(left: 16),
                                     child: TextWidget(
-                                      text: state
-                                          .productDetail!.product!.description!,
+                                      text: state.productDetail!.description!,
                                       style: textStyle(const Color(0xff777777),
                                           FontWeight.w600, 14),
                                       align: TextAlign.start,
@@ -186,7 +245,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                     padding: const EdgeInsets.only(left: 16),
                                     child: TextWidget(
                                       text:
-                                          '\u{20B9}${state.productDetail!.product!.mrp!}',
+                                          '\u{20B9}${state.productDetail!.mrp!}',
                                       style: textStyle(const Color(0xff777777),
                                           FontWeight.w600, 14),
                                       align: TextAlign.start,
@@ -199,7 +258,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                     padding: const EdgeInsets.only(left: 16),
                                     child: TextWidget(
                                       text:
-                                          '\u{20B9} ${state.productDetail!.product!.selling}',
+                                          '\u{20B9} ${state.productDetail!.selling}',
                                       style: textStyle(const Color(0xff262626),
                                           FontWeight.w600, 14),
                                       align: TextAlign.right,
@@ -210,22 +269,26 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                   ),
                                   Row(
                                     children: [
-                                      MaterialButtonWidget(
-                                        width: 200,
-                                        onTap: () {},
-                                        child: TextWidget(
-                                          text: 'ADD TO CART',
-                                          style: textStyle(Colors.black,
-                                              FontWeight.w600, 14),
+                                      Expanded(
+                                        flex: 1,
+                                        child: MaterialButtonWidget(
+                                          onTap: () {},
+                                          child: TextWidget(
+                                            text: 'ADD TO CART',
+                                            style: textStyle(Colors.black,
+                                                FontWeight.w600, 14),
+                                          ),
                                         ),
                                       ),
-                                      MaterialButtonWidget(
-                                        width: 200,
-                                        onTap: () {},
-                                        child: TextWidget(
-                                          text: 'BUY NOW',
-                                          style: textStyle(Colors.black,
-                                              FontWeight.w600, 14),
+                                      Expanded(
+                                        flex: 1,
+                                        child: MaterialButtonWidget(
+                                          onTap: () {},
+                                          child: TextWidget(
+                                            text: 'BUY NOW',
+                                            style: textStyle(Colors.black,
+                                                FontWeight.w600, 14),
+                                          ),
                                         ),
                                       ),
                                     ],
@@ -235,7 +298,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                             )
                           ],
                         ),
-                      ))
+                      ),
+                    )
                   : const Center(
                       child: CircularProgressIndicator(),
                     ),

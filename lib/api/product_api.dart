@@ -54,12 +54,12 @@ class ProductAPI {
             data: formData);
 
     if (response.statusCode == 200) {
-      final allProductListData = Product.fromJson(response.data);
-      return allProductListData;
+      final product = ProductDetail.fromJson(response.data);
+      return product.product;
     }
   }
 
-  static Future<Product?>? addProductAPIWithoutImage(
+  Future<Product?>? addProductAPIWithoutImage(
     String? token,
     AddProductRequest product,
   ) async {
@@ -78,12 +78,11 @@ class ProductAPI {
             data: formData);
 
     if (response.statusCode == 200) {
-      final allProductListData = Product.fromJson(response.data);
-      return allProductListData;
+      return Product.fromJson(response.data);
     }
   }
 
-  static Future<Product?>? updateProductAPWithoutImage(
+  Future<Product?>? updateProductAPWithoutImage(
       String? token, AddProductRequest product, int? id) async {
     var dio = Dio();
 
@@ -106,7 +105,7 @@ class ProductAPI {
     }
   }
 
-  static Future<Product?>? updateProductAPIWithImage(String? token,
+  Future<Product?>? updateProductAPIWithImage(String? token,
       AddProductRequest product, int id, PlatformFile file) async {
     var dio = Dio();
     final response = await dio.put(

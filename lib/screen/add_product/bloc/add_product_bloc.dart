@@ -40,12 +40,13 @@ class AddProductBloc extends Bloc<AddProductEvent, AddProductState> {
       product.description = event.description;
       product.mrp = event.mrp;
       product.selling = event.sellingPrice;
+      ProductAPI productApi = ProductAPI();
 
       if (id != null) {
         // update Product
         if (event.file != null) {
           // update product with image
-          var responseUpdate = ProductAPI.updateProductAPIWithImage(
+          var responseUpdate = await productApi.updateProductAPIWithImage(
               token, product, id!, event.file!);
           if (responseUpdate != null) {
             emit(state.copyWith(isSuccessAddProduct: true, isLoading: true));
@@ -55,7 +56,7 @@ class AddProductBloc extends Bloc<AddProductEvent, AddProductState> {
         } else {
           // update product without image
           var responseUpdate =
-              ProductAPI.updateProductAPWithoutImage(token, product, id!);
+              await productApi.updateProductAPWithoutImage(token, product, id!);
           if (responseUpdate != null) {
             emit(state.copyWith(isSuccessAddProduct: true, isLoading: true));
           } else {
@@ -66,18 +67,22 @@ class AddProductBloc extends Bloc<AddProductEvent, AddProductState> {
         //  Add Product
         if (event.file != null) {
           // add Product with image
-          var response =
-              ProductAPI.addProductAPIWithImage(token, product, event.file!);
+          var response = await ProductAPI.addProductAPIWithImage(
+              token, product, event.file!);
+
           if (response != null) {
-            emit(state.copyWith(isSuccessAddProduct: true, isLoading: true));
+            emit(state.copyWith(
+                isSuccessAddProduct: true, isLoading: true, id: response.id));
           } else {
             emit(state.copyWith(isSuccessAddProduct: false, isLoading: false));
           }
         } else {
           // add Product without image
-          var response = ProductAPI.addProductAPIWithoutImage(token, product);
+          var response =
+              await productApi.addProductAPIWithoutImage(token, product);
           if (response != null) {
-            emit(state.copyWith(isSuccessAddProduct: true, isLoading: true));
+            emit(state.copyWith(
+                isSuccessAddProduct: true, isLoading: true, id: response.id));
           } else {
             emit(state.copyWith(isSuccessAddProduct: false, isLoading: false));
           }
@@ -105,7 +110,7 @@ class AddProductBloc extends Bloc<AddProductEvent, AddProductState> {
       name = event.name;
       emit(state.copyWith(isName: true, disable: false));
       // enable disable button  condition
-         buttonEnableDisable(emit);
+      buttonEnableDisable(emit);
     } else {
       emit(state.copyWith(isName: false, disable: true));
     }
@@ -117,11 +122,10 @@ class AddProductBloc extends Bloc<AddProductEvent, AddProductState> {
       description = event.description;
       emit(state.copyWith(validDescription: true, disable: false));
 
-
       // enable disable button  condition
-         buttonEnableDisable(emit);
+      buttonEnableDisable(emit);
     } else {
-      emit(state.copyWith(validDescription: false,disable: true));
+      emit(state.copyWith(validDescription: false, disable: true));
     }
   }
 
@@ -132,9 +136,9 @@ class AddProductBloc extends Bloc<AddProductEvent, AddProductState> {
       emit(state.copyWith(validMRP: true, disable: false));
 
       // enable disable button  condition
-        buttonEnableDisable(emit);
+      buttonEnableDisable(emit);
     } else {
-      emit(state.copyWith(validMRP: false,disable: true));
+      emit(state.copyWith(validMRP: false, disable: true));
     }
   }
 
@@ -145,24 +149,24 @@ class AddProductBloc extends Bloc<AddProductEvent, AddProductState> {
       emit(state.copyWith(validSellPrice: true, disable: false));
 
       // enable disable button  condition
-        buttonEnableDisable(emit);
+      buttonEnableDisable(emit);
     } else {
-      emit(state.copyWith(validSellPrice: false,disable: true));
+      emit(state.copyWith(validSellPrice: false, disable: true));
     }
   }
 
-   buttonEnableDisable(Emitter<AddProductState> emit){
-     if (state.isName == true &&
-         state.validSellPrice == true &&
-         state.validMRP == true &&
-         state.validDescription == true &&
-         name != null &&
-         description != null &&
-         mrp != null &&
-         selling != null) {
-       emit(state.copyWith(disable: false));
-     } else {
-       emit(state.copyWith(disable: true));
-     }
-   }
+  buttonEnableDisable(Emitter<AddProductState> emit) {
+    if (state.isName == true &&
+        state.validSellPrice == true &&
+        state.validMRP == true &&
+        state.validDescription == true &&
+        name != null &&
+        description != null &&
+        mrp != null &&
+        selling != null) {
+      emit(state.copyWith(disable: false));
+    } else {
+      emit(state.copyWith(disable: true));
+    }
+  }
 }

@@ -1,20 +1,20 @@
-import 'package:desktop_app_demo/model/product_details.dart';
+import 'package:desktop_app_demo/model/product.dart';
 import 'package:equatable/equatable.dart';
 
 class ProductDetailState extends Equatable {
-  final ProductDetail? productDetail;
+  final Product? productDetail;
 
   final bool? isInitialState;
   final bool? productDeleteStatus;
 
   const ProductDetailState({
-    this.productDetail,
+    this.productDetail ,
     this.isInitialState = true,
     this.productDeleteStatus = true,
   });
 
   ProductDetailState copyWith({
-    ProductDetail? productDetail,
+    Product? productDetail,
     bool? isInitialState,
     bool? productDeleteStatus,
   }) {

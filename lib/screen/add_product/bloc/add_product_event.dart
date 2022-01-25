@@ -1,3 +1,4 @@
+import 'package:desktop_app_demo/model/product.dart';
 import 'package:equatable/equatable.dart';
 import 'package:file_picker/file_picker.dart';
 
@@ -57,3 +58,5 @@ class ProductImageEvent extends AddProductEvent {
 
   ProductImageEvent(this.file);
 }
+
+

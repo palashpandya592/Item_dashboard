@@ -64,6 +64,6 @@ class RegisterState extends Equatable {
         birthDate,
         isFailedRegister,
         isDisable,
-        validGender
+        validGender,
       ];
 }

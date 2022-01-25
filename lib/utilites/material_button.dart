@@ -18,7 +18,7 @@ class _MaterialButtonWidgetState extends State<MaterialButtonWidget> {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(8),
-      height: 60,
+      height: 70,
       width: widget.width,
       child: MaterialButton(
         onPressed: widget.onTap,

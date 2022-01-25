@@ -1,3 +1,4 @@
+import 'package:desktop_app_demo/util/Responsive.dart';
 import 'package:flutter/material.dart';
 
 class LabelFieldWidget extends StatefulWidget {
@@ -28,9 +29,19 @@ class _LabelFieldWidgetState extends State<LabelFieldWidget> {
         children: [
           Icon(
             widget.icon,
-            size: widget.iconSize ?? 40,
+            size: widget.iconSize ??
+                Responsive().getResponsiveValue(
+                    forLargeScreen: 40.0,
+                    forMobileScreen: 40.0,
+                    forMediumScreen: 35.0,
+                    forShortScreen: 32.0,
+                    forMobLandScapeMode: 20.0,
+                    context: context),
             color: widget.iconColor,
             semanticLabel: 'Log Out',
+          ),
+          const SizedBox(
+            width: 4,
           ),
           Text(
             widget.textLabel!,

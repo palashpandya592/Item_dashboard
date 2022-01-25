@@ -8,6 +8,8 @@ import 'product_list_state.dart';
 class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
   ProductListBloc() : super(const ProductListState()) {
     on<FetchProductListEvent>(_fetchProducts);
+    on<UpdateProductList>(_updateProductList);
+    on<RefreshList>(_refreshList);
   }
 
   void _fetchProducts(
@@ -20,13 +22,39 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
       var data = await ProductAPI.productListAPI(token, state.page);
       state.productList?.addAll(data?.itemList ?? []);
 
-      emit(state.copyWith(
+      emit(
+        state.copyWith(
+            isInitialState: false,
+            productList: state.productList ?? data?.itemList,
+            page: data?.currentPage != null ? (data!.currentPage! + 1) : 1,
+            isLoading: false,
+            isPaginationRequired:
+                data?.itemList != null && data!.itemList!.isNotEmpty),
+      );
+    }
+  }
+
+  void _refreshList(RefreshList event, Emitter<ProductListState> emit) async {
+    final sharedPreferenceUtil = SharedPreferenceUtil.getInstance();
+    String? token =
+        await sharedPreferenceUtil.getString(SharedPreferenceUtil.TOKEN);
+    var data = await ProductAPI.productListAPI(token, 1);
+    emit(
+      state.copyWith(
           isInitialState: false,
-          productList: state.productList ?? data?.itemList,
-          page: data?.currentPage != null ? (data!.currentPage! + 1) : 1,
+          productList: data!.itemList,
+          page: data.currentPage != null ? (data.currentPage! + 1) : 1,
           isLoading: false,
           isPaginationRequired:
-              data?.itemList != null && data!.itemList!.isNotEmpty));
-    }
+              data.itemList != null && data.itemList!.isNotEmpty),
+    );
+  }
+
+  void _updateProductList(
+      UpdateProductList event, Emitter<ProductListState> emit) async {
+    var index = event.index!;
+    state.productList![index] = event.product!;
+    final temp = state.copyWith(productList: state.productList);
+    emit(temp);
   }
 }

@@ -28,8 +28,7 @@ class TextFieldWidget extends StatefulWidget {
   final Color? cursorColors;
   final bool obscureText;
   final int? maxLine;
-  final  TextInputType? textInputType;
-
+  final TextInputType? textInputType;
 
   @override
   _TextFieldWidgetState createState() => _TextFieldWidgetState();
@@ -39,7 +38,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(8),
+      padding: const EdgeInsets.only(left: 8, right: 8),
       width: 350,
       child: TextField(
         obscureText: widget.obscureText,

@@ -11,6 +11,7 @@ class ProductDetailBloc extends Bloc<ProductDetailEvent, ProductDetailState> {
   ProductDetailBloc() : super(const ProductDetailState()) {
     on<FetchProductEvent>(_fetchProduct);
     on<ProductDeleteEvent>(_deleteProduct);
+    on<ProductUpdateEvent>(_updateProduct);
   }
 
   void _fetchProduct(
@@ -19,9 +20,9 @@ class ProductDetailBloc extends Bloc<ProductDetailEvent, ProductDetailState> {
     String? token =
         await sharedPreferenceUtil.getString(SharedPreferenceUtil.TOKEN);
     var data = await ProductAPI.productDetailAPI(token, event.id!);
-    emit(state.copyWith(productDetail: data));
+    //emit(state.copyWith(productDetail: data.product));
     if (data != null) {
-      emit(state.copyWith(isInitialState: false));
+      emit(state.copyWith(isInitialState: false, productDetail: data.product));
     }
   }
 
@@ -35,5 +36,10 @@ class ProductDetailBloc extends Bloc<ProductDetailEvent, ProductDetailState> {
     if (data != null) {
       emit(state.copyWith(productDeleteStatus: true));
     }
+  }
+
+  void _updateProduct(
+      ProductUpdateEvent event, Emitter<ProductDetailState> emit) async {
+     emit(state.copyWith(productDetail: event.product));
   }
 }

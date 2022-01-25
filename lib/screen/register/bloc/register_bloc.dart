@@ -50,6 +50,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
         // register with profile
         var response = await registerAPI.registerAPIWithImage(
             registerRequest, event.file!);
+
         if (response != null) {
           emit(state.copyWith(
             isSuccessLogin: true,
