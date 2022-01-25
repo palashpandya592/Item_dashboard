@@ -1,5 +1,6 @@
 import 'package:desktop_app_demo/model/register_request.dart';
 import 'package:desktop_app_demo/model/register_response.dart';
+import 'package:desktop_app_demo/rest_api/rest_api.dart';
 import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 
@@ -20,9 +21,8 @@ class RegisterAPI {
       'gender': registerRequest.gender,
       'birth_date': registerRequest.birthDate,
     });
-    final response = await dio.post(
-        'https://139.59.79.228/flutter-api/public/api/register',
-        data: formData);
+    final response = await dio
+        .post('${RestAPI.API_BASE_URL}${RestAPI.registerUser}', data: formData);
     if (response.statusCode == 200) {
       return RegisterResponse.fromJson(response.data);
     }
@@ -44,9 +44,8 @@ class RegisterAPI {
       'birth_date': registerRequest.birthDate,
       'image': await MultipartFile.fromFile(file.path!, filename: file.name),
     });
-    final response = await dio.post(
-        'https://139.59.79.228/flutter-api/public/api/register',
-        data: formData);
+    final response = await dio
+        .post('${RestAPI.API_BASE_URL}${RestAPI.registerUser}', data: formData);
     if (response.statusCode == 200) {
       return RegisterResponse.fromJson(response.data);
     }

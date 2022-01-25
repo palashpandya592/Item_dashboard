@@ -1,5 +1,5 @@
-import 'package:desktop_app_demo/api/product_api.dart';
 import 'package:desktop_app_demo/model/add_product_request.dart';
+import 'package:desktop_app_demo/rest_api/api/product_api.dart';
 import 'package:desktop_app_demo/screen/add_product/bloc/add_product_event.dart';
 import 'package:desktop_app_demo/screen/add_product/bloc/add_product_state.dart';
 import 'package:desktop_app_demo/util/shared_prefence_util.dart';
@@ -49,6 +49,7 @@ class AddProductBloc extends Bloc<AddProductEvent, AddProductState> {
           var responseUpdate = await productApi.updateProductAPIWithImage(
               token, product, id!, event.file!);
           if (responseUpdate != null) {
+
             emit(state.copyWith(isSuccessAddProduct: true, isLoading: true));
           } else {
             emit(state.copyWith(isSuccessAddProduct: false, isLoading: false));
@@ -58,6 +59,7 @@ class AddProductBloc extends Bloc<AddProductEvent, AddProductState> {
           var responseUpdate =
               await productApi.updateProductAPWithoutImage(token, product, id!);
           if (responseUpdate != null) {
+
             emit(state.copyWith(isSuccessAddProduct: true, isLoading: true));
           } else {
             emit(state.copyWith(isSuccessAddProduct: false, isLoading: false));

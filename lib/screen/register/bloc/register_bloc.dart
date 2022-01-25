@@ -1,6 +1,6 @@
 import 'package:desktop_app_demo/Util/shared_prefence_util.dart';
-import 'package:desktop_app_demo/api/register_api.dart';
 import 'package:desktop_app_demo/model/register_request.dart';
+import 'package:desktop_app_demo/rest_api/api/register_api.dart';
 import 'package:desktop_app_demo/screen/register/bloc/register_event.dart';
 import 'package:desktop_app_demo/screen/register/bloc/register_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

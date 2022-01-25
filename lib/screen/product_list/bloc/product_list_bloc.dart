@@ -1,4 +1,4 @@
-import 'package:desktop_app_demo/api/product_api.dart';
+import 'package:desktop_app_demo/rest_api/api/product_api.dart';
 import 'package:desktop_app_demo/screen/product_list/bloc/product_list_event.dart';
 import 'package:desktop_app_demo/util/shared_prefence_util.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

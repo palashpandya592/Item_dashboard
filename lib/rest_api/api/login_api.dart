@@ -1,11 +1,9 @@
-import 'package:desktop_app_demo/Util/shared_prefence_util.dart';
 import 'package:desktop_app_demo/model/login_request.dart';
 import 'package:desktop_app_demo/model/user_response.dart';
+import 'package:desktop_app_demo/rest_api/rest_api.dart';
 import 'package:dio/dio.dart';
 
 class LoginAPI {
-  final sharedPreferenceUtil = SharedPreferenceUtil.getInstance();
-
   Future<UserResponse?> loginAPI(LoginRequest loginRequest) async {
     var dio = Dio();
     Map<String, dynamic> request = {
@@ -16,7 +14,14 @@ class LoginAPI {
     };
     FormData formData = FormData.fromMap(request);
     final response = await dio.post(
-        'https://139.59.79.228/flutter-api/public/api/login',
+        '${RestAPI.API_BASE_URL}${RestAPI.loginAPI}',
+        options: Options(headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET, POST, OPTIONS, PUT, PATCH, DELETE' ,// If needed
+        'Access-Control-Allow-Headers': 'X-Requested-With,content-type' ,// If needed
+        'Access-Control-Allow-Credentials': true // If  needed,
+
+        }),
         data: formData);
     if (response.statusCode == 200) {
       return UserResponse.fromJson(response.data);

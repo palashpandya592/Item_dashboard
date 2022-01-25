@@ -4,6 +4,7 @@ import 'package:desktop_app_demo/model/product_details.dart';
 import 'package:desktop_app_demo/model/product_list.dart';
 import 'package:desktop_app_demo/model/add_product_request.dart';
 import 'package:desktop_app_demo/model/product_response.dart';
+import 'package:desktop_app_demo/rest_api/rest_api.dart';
 import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 
@@ -11,7 +12,7 @@ class ProductAPI {
   static Future<ProductList?>? productListAPI(String? token, int page) async {
     var dio = Dio();
     final response = await dio.get(
-      'https://139.59.79.228/flutter-api/public/api/products?page=$page',
+      '${RestAPI.API_BASE_URL}${RestAPI.listProducts}$page',
       options: Options(headers: {
         'Authorization': 'Bearer $token',
       }),
@@ -25,7 +26,7 @@ class ProductAPI {
   static Future<ProductDetail?>? productDetailAPI(String? token, int id) async {
     var dio = Dio();
     final response = await dio.get(
-      'https://139.59.79.228/flutter-api/public/api/products/$id',
+      '${RestAPI.API_BASE_URL}${RestAPI.detailProduct}$id',
       options: Options(headers: {
         'Authorization': 'Bearer $token',
       }),
@@ -47,15 +48,14 @@ class ProductAPI {
       'image': await MultipartFile.fromFile(file.path!, filename: file.name),
     });
     final response =
-        await dio.post('https://139.59.79.228/flutter-api/public/api/products',
+        await dio.post('${RestAPI.API_BASE_URL}${RestAPI.addProduct}',
             options: Options(headers: {
               'Authorization': 'Bearer $token',
             }),
             data: formData);
 
     if (response.statusCode == 200) {
-      final product = ProductDetail.fromJson(response.data);
-      return product.product;
+      return Product.fromJson(response.data);
     }
   }
 
@@ -71,7 +71,7 @@ class ProductAPI {
       'selling': product.selling,
     });
     final response =
-        await dio.post('https://139.59.79.228/flutter-api/public/api/products',
+        await dio.post('${RestAPI.API_BASE_URL}${RestAPI.addProduct}',
             options: Options(headers: {
               'Authorization': 'Bearer $token',
             }),
@@ -87,7 +87,7 @@ class ProductAPI {
     var dio = Dio();
 
     final response = await dio.put(
-        'https://139.59.79.228/flutter-api/public/api/products/$id',
+        '${RestAPI.API_BASE_URL}${RestAPI.updateProduct}$id',
         options:
             Options(contentType: Headers.formUrlEncodedContentType, headers: {
           'Authorization': 'Bearer $token',
@@ -109,7 +109,7 @@ class ProductAPI {
       AddProductRequest product, int id, PlatformFile file) async {
     var dio = Dio();
     final response = await dio.put(
-        'https://139.59.79.228/flutter-api/public/api/products/$id',
+        '${RestAPI.API_BASE_URL}${RestAPI.updateProduct}$id',
         options:
             Options(contentType: Headers.formUrlEncodedContentType, headers: {
           'Authorization': 'Bearer $token',
@@ -133,7 +133,7 @@ class ProductAPI {
       String? token, int id) async {
     var dio = Dio();
     final response = await dio.delete(
-      'https://139.59.79.228/flutter-api/public/api/products/$id',
+      '${RestAPI.API_BASE_URL}${RestAPI.deleteProduct}$id',
       options: Options(headers: {
         'Authorization': 'Bearer $token',
       }),

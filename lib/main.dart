@@ -1,9 +1,6 @@
 import 'dart:io';
-
 import 'package:desktop_app_demo/route/route_name.dart';
 import 'package:desktop_app_demo/router_genrator/router_generator.dart';
-import 'package:desktop_app_demo/screen/luncher_page.dart';
-import 'package:desktop_app_demo/screen/login/login_screen.dart';
 import 'package:flutter/material.dart';
 
 class MyHttpOverrides extends HttpOverrides {

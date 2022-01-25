@@ -1,7 +1,6 @@
 import 'package:desktop_app_demo/Util/shared_prefence_util.dart';
-import 'package:desktop_app_demo/api/login_api.dart';
 import 'package:desktop_app_demo/model/login_request.dart';
-import 'package:dio/dio.dart';
+import 'package:desktop_app_demo/rest_api/api/login_api.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'login_event.dart';
@@ -31,13 +30,11 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         emit(state.copyWith(
             isSuccessLogin: true, isLoading: true, isFailedLogin: false));
       } else {
-        print('inside the failed login');
         emit(state.copyWith(
             isSuccessLogin: false, isLoading: false, isFailedLogin: true));
       }
       emit(state.copyWith(isSuccessLogin: false, isLoading: false));
     } else {
-            print('inside the failed login');
       emit(
         state.copyWith(
             isSuccessLogin: false, isLoading: false, isFailedLogin: false),

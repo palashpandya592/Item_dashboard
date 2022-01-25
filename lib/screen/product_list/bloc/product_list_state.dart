@@ -8,10 +8,10 @@ class ProductListState extends Equatable {
 
   final int page;
 
-  //It will be used for pagination api calling
+  //It will be used for pagination rest_api calling
   final bool isLoading;
 
-  //It will be use to decide whether the api is required or not for next page
+  //It will be use to decide whether the rest_api is required or not for next page
   final bool isPaginationRequired;
 
   const ProductListState(

@@ -59,11 +59,13 @@ class _AddProductScreenState extends State<AddProductScreen> {
             if (widget.callBack != null) {
               if (widget.product.id != null) {
                 Product updateProduct = Product(
-                    id: widget.product.id,
-                    name: name.text,
-                    description: description.text,
-                    mrp: int.parse(mrp.text),
-                    selling: int.parse(selling.text));
+                  id: widget.product.id,
+                  name: name.text,
+                  description: description.text,
+                  mrp: int.parse(mrp.text),
+                  selling: int.parse(selling.text),
+                );
+
                 widget.callBack!(updateProduct);
               }
             }
@@ -74,8 +76,9 @@ class _AddProductScreenState extends State<AddProductScreen> {
           builder: (context, state) {
             return Scaffold(
               appBar: AppBar(
-                title:  Text( widget.product.id ==null
-                    ?'Add Product Screen':'Update Product Screen '),
+                title: Text(widget.product.id == null
+                    ? 'Add Product Screen'
+                    : 'Update Product Screen '),
                 backgroundColor: ColorsConstant.APP_PRIMARY_COLOR,
               ),
               body: Row(
@@ -130,7 +133,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                                 onTap: () async {
                                   var pickedFile = await FilePicker.platform
                                       .pickFiles(type: FileType.image);
-                                  file = pickedFile!.files.single;
+                                  file = pickedFile?.files.single;
 
                                   context
                                       .read<AddProductBloc>()
@@ -235,8 +238,9 @@ class _AddProductScreenState extends State<AddProductScreen> {
                                       ),
                                     )
                                   : Text(
-                                widget.product.id ==null
-                                    ?'Add Product':'Update Product  ',
+                                      widget.product.id == null
+                                          ? 'Add Product'
+                                          : 'Update Product  ',
                                       style: textStyle(
                                           Colors.white, FontWeight.w600, 18),
                                     ),
